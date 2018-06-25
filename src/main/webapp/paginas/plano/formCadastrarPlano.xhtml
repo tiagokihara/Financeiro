@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<f:metadata>
+			<f:viewParam name="idPlano" value="#{planoBean.plano.id}" />
+			<f:event type="preRenderView" listener="#{planoBean.carregarPlano}" />
+		</f:metadata>
+
+		<p:blockUI block="pnDados" blocked="#{planoBean.plano.dataFim != null}" widgetVar="block" />
+		
+		<p:focus for="txtNome" />
+
+		<h:form id="formPlano" prependId="false">
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Cadastrar Plano</span>
+					<p:outputPanel id="pnDados">
+						<div class="row">
+							<div class="input-field col s12">
+								<h:outputLabel for="txtNome" value="Nome"/>
+								<h:inputText id="txtNome" styleClass="validate" value="#{planoBean.plano.nome}" />
+							</div>
+						</div>
+					</p:outputPanel>
+					<div class="row right">
+						<div class="col s12">
+							<p:link outcome="/paginas/plano/listarPlanos" id="btnCancelar">
+								<span><mp:icon name="mdi-navigation-arrow-back" /> Voltar</span>
+							</p:link>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnExcluir" styleClass="btn action waves-effect waves-light red darken-2" actionListener="#{planoBean.excluir}"
+								ajax="true" update="formPlano" rendered="#{(planoBean.plano.id != null and planoBean.plano.dataFim == null)}">
+								<span>Excluir <i class="mdi-action-delete" style="vertical-align: top" />
+								</span>
+							</p:commandLink>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnSalvar" styleClass="btn action waves-effect waves-light green darken-2" actionListener="#{planoBean.salvar}"
+								ajax="true" update="formPlano" rendered="#{planoBean.plano.dataFim == null}">
+								<span>Salvar <i class="mdi-content-send" style="vertical-align: top" />
+								</span>
+							</p:commandLink>
+						</div>
+					</div>
+					<div class="row"></div>
+				</div>
+			</div>
+		</h:form>
+		
+		<script type="text/javascript">
+			$(document).ready(function() {
+				
+				if( !$('#txtNome_input').val() == '') {
+
+					if (!$('#txtNome_input').hasClass('valid')) {
+						
+						$('#txtNome_input').addClass('valid');
+					}
+				}
+				
+			});
+		</script>
+		
+	</ui:define>
+</ui:composition>

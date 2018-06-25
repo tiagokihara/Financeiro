@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formRemessa" prependId="false">
+
+			<div class="card">
+				<div class="card-content">
+
+					<div class="row">
+						<div class="col s12">Um arquivo de remessa com todos os boletos relacionados abaixo será gerado.</div>
+					</div>
+
+					<div class="row right">
+						<div class="col s12">
+							<p:link outcome="/paginas/boleto/listarRemessas" id="btnCancelar" onclick="formRemessa.target='_self'">
+								<span><mp:icon name="mdi-navigation-arrow-back" /> Voltar</span>
+							</p:link>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnValidar" actionListener="#{remessaBean.validar}" onclick="formRemessa.target='_self'" update="formRemessa"
+								styleClass="btn action waves-effect waves-light red darken-2" ajax="true" oncomplete="handleGerarRequest(xhr, status, args)">
+								<span>Gerar <i class="mdi-content-archive" style="vertical-align: top" /></span>
+							</p:commandLink>
+							<p:commandButton id="btnGerarRemessa" action="#{remessaBean.gerarRemessa}" ajax="false" style="display:none"
+								onclick="formRemessa.target='_blank'" />
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Conta</span>
+					<div class="row">
+						<div class="col s12">
+							<mp:radioButton withGap="true" value="#{remessaBean.idConta}">
+								<f:selectItems value="#{remessaBean.contas}" var="conta" itemLabel="#{conta.nome}" itemValue="#{conta.id}" />
+								<p:ajax update="formRemessa" listener="#{remessaBean.carregarBoletos}" process="@this" />
+							</mp:radioButton>
+						</div>
+					</div>
+				</div>
+
+				<div class="card-content">
+					<span class="card-title" style="color: black">Boletos</span>
+					<div class="row">
+						<div class="col s12">
+							<p:dataTable id="dtbBoletos" value="#{remessaBean.boletos}" var="boleto" rows="10" paginator="true" paginatorPosition="bottom"
+								emptyMessage="Nenhum registro foi encontrado.">
+
+								<p:column headerText="Id">
+									<h:outputText value="#{boleto.id}" />
+								</p:column>
+								<p:column headerText="Cliente">
+									<h:outputText value="#{boleto.parcela.contrato.cliente.nome}" />
+								</p:column>
+								<p:column headerText="Conta">
+									<h:outputText value="#{boleto.parcela.contrato.conta.nome}" />
+								</p:column>
+								<p:column headerText="Vencimento">
+									<h:outputText value="#{boleto.parcela.vencimento}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Valor">
+									<h:outputText value="#{boleto.parcela.valor}" />
+								</p:column>
+
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		<script type="text/javascript">
+		
+			$(document).ready(function() {
+				
+				$('#dtbBoletos').removeClass('ui-datatable');
+				$('table').addClass('striped responsive-table');
+				
+			});
+		
+			function handleGerarRequest(xhr, status, args) {
+				if (args.valido) {
+					$('#btnGerarRemessa').click();
+				}
+			}
+		</script>
+
+		</h:form>
+
+	</ui:define>
+</ui:composition>

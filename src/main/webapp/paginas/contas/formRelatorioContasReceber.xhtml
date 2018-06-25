@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:mp="http://primefaces.org/ui/material" template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formRelatorio" prependId="false">
+		
+			<p:focus for="txtDataInicial" />
+			<p:defaultCommand target="btnValidar" />
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Contas a Receber</span>
+					<p:outputPanel id="pnDados">
+						<div class="row">
+							<div class="input-field col s12 m6">
+								<h:outputLabel id="txtDataInicialLbl" for="txtDataInicial" value="Data Inicial" />
+								<p:inputMask id="txtDataInicial" styleClass="validate" mask="99/99/9999" value="#{contasBean.dataInicial}"
+									onblur="limparMascara(this)">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</div>
+							<div class="input-field col s12 m6">
+								<h:outputLabel id="txtDataFinalLbl" for="txtDataFinal" value="Data final" />
+								<p:inputMask id="txtDataFinal" styleClass="validate" mask="99/99/9999" value="#{contasBean.dataFinal}" onblur="limparMascara(this)">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</div>
+						</div>
+					</p:outputPanel>
+					<div class="row right">
+						<div class="col s12">
+							<p:commandLink id="btnValidar" actionListener="#{contasBean.validarForm}" onclick="formRelatorio.target='_self'"
+								styleClass="btn action waves-effect waves-light red darken-2" oncomplete="handleRequest(xhr, status, args)">
+								<span>Gerar <mp:icon name="mdi-action-print" style="vertical-align: top" /></span>
+							</p:commandLink>
+							<p:commandButton id="btnImprimir" actionListener="#{contasBean.imprimirContasReceber}" onclick="formRelatorio.target='_blank'"
+								ajax="false" style="display:none" />
+						</div>
+					</div>
+					<div class="row"></div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				function handleRequest(xhr, status, args) {
+					
+					if (args.validouDatas) {
+						
+						$('#formRelatorio').attr('target', '_blank');
+						$('#btnImprimir').trigger('click');
+					} 
+				}
+
+				function limparMascara(obj) {
+
+					if ($(obj).val() == '__/__/____') {
+
+						$(obj).val('');
+
+						$(obj).removeClass('valid');
+						$('#' + $(obj).attr('id') + 'Lbl').removeClass('active');
+					}
+				}
+			</script>
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="af54f911-a54f-482a-a2a5-c16d87b42ee5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset2" uuid="bf2b7b8b-d608-4854-880e-ce5c9ff85d81">
+		<field name="nomeDependente" class="java.lang.String">
+			<fieldDescription><![CDATA[nome]]></fieldDescription>
+		</field>
+	</subDataset>
+	<parameter name="BASE" class="java.io.InputStream" isForPrompting="false"/>
+	<field name="nomeCliente" class="java.lang.String">
+		<fieldDescription><![CDATA[cliente.nome]]></fieldDescription>
+	</field>
+	<field name="idCliente" class="java.lang.Long">
+		<fieldDescription><![CDATA[cliente.id]]></fieldDescription>
+	</field>
+	<field name="dataNascimento" class="java.util.Date">
+		<fieldDescription><![CDATA[cliente.nascimento]]></fieldDescription>
+	</field>
+	<field name="validade" class="java.util.Date">
+		<fieldDescription><![CDATA[validadeContrato]]></fieldDescription>
+	</field>
+	<field name="dependentes" class="java.util.List">
+		<fieldDescription><![CDATA[cliente.dependentes]]></fieldDescription>
+	</field>
+	<field name="planoFuneral" class="java.lang.Boolean">
+		<fieldDescription><![CDATA[planoFuneral]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="176" splitType="Stretch">
+			<rectangle>
+				<reportElement uuid="9ab3196a-7383-4358-adc5-cb21dff3dc8b" x="0" y="0" width="482" height="154"/>
+			</rectangle>
+			<rectangle>
+				<reportElement uuid="0bd1c730-b8fa-4856-b6a0-168c6e475e7b" mode="Opaque" x="1" y="1" width="240" height="152" backcolor="#F0F0F0"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement uuid="be5ff20a-1eab-4c5d-b793-d20eec96f76e" x="0" y="0" width="241" height="85" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="0"/>
+				<imageExpression><![CDATA[$P{BASE}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement uuid="25df016d-28c6-49b6-962c-bbc3c8ffc3d9" x="0" y="115" width="35" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Nome:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="12f9b0fd-502d-4c3b-bcd9-104beba21131" x="35" y="115" width="206" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement uuid="2e54dd56-10c8-4937-8fae-84b066c585c8" x="0" y="91" width="241" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[String.format("%09d", $F{idCliente})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="deabf11f-53cd-4c24-aeeb-ba2c3409799a" x="0" y="134" width="63" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Nascimento:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="4f65ff31-bdb2-4256-9d44-b47358066d6f" x="63" y="134" width="64" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dataNascimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="07ab9d38-e32e-4c22-80b5-a210b8a50ad7" x="127" y="134" width="45" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Validade:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="5c644645-586c-41b3-a39d-da998cd98da9" x="306" y="0" width="176" height="10" isPrintWhenDetailOverflows="true"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="dataset2" uuid="2002f62a-da1b-4afd-b984-564658be1134">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{dependentes})]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="10" width="176">
+						<textField>
+							<reportElement uuid="7ec75ccd-a3b0-4999-99d4-46f198ddf186" x="0" y="0" width="176" height="10" isPrintWhenDetailOverflows="true"/>
+							<textElement verticalAlignment="Middle">
+								<font size="7" isBold="true"/>
+								<paragraph lineSpacing="Single"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{nomeDependente}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="06b2642e-fdbb-4bb5-a78b-75e65811c702" x="241" y="0" width="65" height="15"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Top">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Dependentes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="69df02c8-f96f-4568-bcc7-fd8885996f21" x="241" y="142" width="241" height="12"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Rua 10 n. 2740 - Centro - Jales - SP Fones: (17) 3632-7302 | (17) 99705-4242]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="15efeb8b-4a4c-4279-a538-18472d865576" x="241" y="133" width="241" height="12"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Essencial Vida]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="67621aa1-f93b-4eb1-82d1-770ec8394f64" x="241" y="122" width="241" height="12"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VÁLIDO SOMENTE NA REGIÃO DE JALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="983f0f87-0491-40ce-a846-0e1e4ba3b4c7" x="241" y="112" width="241" height="12"/>
+				<box leftPadding="2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[Válido somente com apresentação de documento de identificação]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="a423c09a-40f0-4da6-9a3e-0cbb56c87866" x="172" y="134" width="69" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{validade}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d61a8877-2fee-4a9a-b39a-638ae8e43fd9" x="241" y="102" width="241" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{planoFuneral} != null && $F{planoFuneral}) ?
+"ATEND. FUNERAL: ANGELUS (17) 3632-2002"
+:
+"SEM ATENDIMENTO FUNERAL")]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

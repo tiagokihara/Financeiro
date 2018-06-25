@@ -1,0 +1,26 @@
+html, body {
+	height: 100%;
+}
+
+html {
+	display: table;
+	margin: auto;
+}
+
+body {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#login-page {
+	width: 350px;
+}
+
+.margin {
+	margin: 0px !important;
+}
+
+.login-form-text {
+	text-transform: uppercase;
+	letter-spacing: 2px;
+}

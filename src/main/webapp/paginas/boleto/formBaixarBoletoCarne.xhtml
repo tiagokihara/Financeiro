@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	xmlns:pe="http://primefaces.org/ui/extensions" template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<p:focus for="txtCodigo" />
+
+		<h:form id="formBaixa" prependId="false">
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Baixas</span>
+					<div class="row">
+						<div class="col s12">
+							<mp:radioButton withGap="true" value="#{baixaBean.tipoBaixa}">
+								<f:selectItem itemLabel="Boleto" itemValue="B" />
+								<f:selectItem itemLabel="Carnê" itemValue="C" />
+								<p:ajax update="formBaixa" process="@this" immediate="true" />
+							</mp:radioButton>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s12">
+							<label id="txtCodigo_inputLbl" for="txtCodigo" class="active">Código</label>
+							<pe:inputNumber id="txtCodigo" onfocus="$('#txtCodigo_inputLbl').addClass('active')" onblur="limparMascara(this)" decimalPlaces="0" decimalSeparator="" thousandSeparator=""
+								value="#{baixaBean.codigo}" />
+						</div>
+					</div>
+					<div class="row right">
+						<div class="col s12">
+							<p:commandLink id="btnPesquisar" styleClass="btn action waves-effect waves-light red darken-2" ajax="true" update="contrato"
+								actionListener="#{baixaBean.carregarParcela}">
+								<span>Pesquisar <i class="mdi-action-find-replace" style="vertical-align: top" />
+								</span>
+							</p:commandLink>
+						</div>
+					</div>
+					<div class="row"></div>
+				</div>
+			</div>
+
+			<p:outputPanel id="contrato">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title" style="color: black">Contrato/Parcela</span>
+						<div class="row">
+							<div class="col s12">
+								<label for="txtCliente">Cliente</label>
+								<p:inputText id="txtCliente" value="#{baixaBean.parcela.contrato.cliente.nome}" disabled="true" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 m6">
+								<label for="txtPlano">Plano</label>
+								<p:inputText id="txtPlano" value="#{baixaBean.parcela.contrato.plano.nome}" disabled="true" />
+							</div>
+							<div class="col s12 m6">
+								<label for="txtValor">Valor</label>
+								<p:inputText id="txtValor" value="#{baixaBean.parcela.contrato.valor}" disabled="true" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 m4">
+								<label for="txtParcela">Parcela</label>
+								<p:inputText id="txtParcela" value="#{baixaBean.parcela.numeroParcela}" disabled="true" />
+							</div>
+							<div class="col s12 m4">
+								<label for="txtVencimento">Vencimento</label>
+								<p:inputText id="txtVencimento" value="#{baixaBean.parcela.vencimento}" disabled="true">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputText>
+							</div>
+							<div class="col s12 m4">
+								<label for="txtValorParcela">Valor parcela</label>
+								<p:inputText id="txtValorParcela" value="#{baixaBean.parcela.valor}" disabled="true" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 m6">
+								<label for="txtPagamento">Data pagamento</label>
+								<p:inputMask id="txtPagamento" styleClass="validate" mask="99/99/9999" value="#{baixaBean.parcela.pagamento}"
+									disabled="#{baixaBean.bloqueado}" onblur="limparMascara(this)">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</div>
+							<div class="col s12 m6">
+								<label id="txtValorPagamento_inputLbl" for="txtValorPagamento">Valor pagamento</label>
+								<pe:inputNumber id="txtValorPagamento" onblur="limparMascara(this)" decimalPlaces="2" decimalSeparator="," thousandSeparator="."
+									value="#{baixaBean.parcela.valorPagamento}" styleClass="validate" disabled="#{baixaBean.bloqueado}" />
+							</div>
+						</div>
+						<div class="row right">
+							<div class="col s12">
+								<p:commandLink id="btnBaixar" styleClass="btn action waves-effect waves-light red darken-2" ajax="true"
+									actionListener="#{baixaBean.baixar}" update="formBaixa" rendered="#{!baixaBean.bloqueado}">
+									<span>Baixar <i class="mdi-navigation-check" style="vertical-align: top" />
+									</span>
+								</p:commandLink>
+							</div>
+						</div>
+						<div class="row"></div>
+						<div class="row"></div>
+					</div>
+				</div>
+			</p:outputPanel>
+
+			<script type="text/javascript">
+				function limparMascara(obj) {
+
+					if (($(obj).val() == '') || ($(obj).val() == '__/__/____')) {
+
+						$(obj).val('');
+
+						$(obj).removeClass('valid');
+						$('#' + $(obj).attr('id') + 'Lbl').removeClass('active');
+					} else {
+						
+						if (! $(obj).hasClass('valid')) {
+							
+							$(obj).addClass('valid');
+						}
+					}
+				}
+			</script>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

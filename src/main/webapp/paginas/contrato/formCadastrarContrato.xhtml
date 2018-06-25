@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:mp="http://primefaces.org/ui/material" template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="idCliente" value="#{contratoBean.cliente.id}" />
+			<f:viewParam name="idContrato" value="#{contratoBean.contrato.id}" />
+			<f:event type="preRenderView" listener="#{contratoBean.carregarClienteContrato}" />
+		</f:metadata>
+
+		<p:blockUI block="pnDados" blocked="#{contratoBean.editando}" widgetVar="block" />
+
+		<h:form id="formContrato" prependId="false" styleClass="form">
+
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Cadastrar Contrato</span>
+
+					<div class="row"></div>
+					<div class="row">
+						<div class="col s12 m5">
+							Cliente:
+							<h:outputText value="#{contratoBean.cliente.nome}" />
+						</div>
+						<div class="col s12 m4">
+							Tel:
+							<h:outputText value="#{contratoBean.cliente.telefone}" rendered="#{contratoBean.cliente.telefone != null}" />
+							<h:outputText value=" - " rendered="#{contratoBean.cliente.telefone != null}" />
+							<h:outputText value="#{contratoBean.cliente.celular}" rendered="#{contratoBean.cliente.celular != null}" />
+						</div>
+						<div class="col s12 m3">
+							<div class="right">
+								<p:commandLink id="btnPesquisar" styleClass="btn action waves-effect waves-light red darken-2"
+									oncomplete="$('#modal1').openModal();" actionListener="#{contratoBean.carregarClientes}" update="pnClientes"
+									rendered="#{!contratoBean.editando}">
+									<span>Cliente <i class="mdi-action-find-replace" style="vertical-align: top" />
+									</span>
+								</p:commandLink>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Dados</span>
+
+					<p:outputPanel id="pnDados">
+						<div class="row"></div>
+						<div class="row">
+							<div class="input-field col s12 m6">
+								<h:selectOneMenu id="cmbPlano" value="#{contratoBean.contrato.plano.id}" onchange="validar(this)">
+									<f:selectItem noSelectionOption="true" itemLabel="Selecione..." itemValue="" />
+									<f:selectItems value="#{contratoBean.planos}" var="plano" itemLabel="#{plano.nome}" itemValue="#{plano.id}" />
+								</h:selectOneMenu>
+								<label for="cmbPlano">Plano</label>
+							</div>
+							<div class="input-field col s12 m6">
+								<label id="txtValor_inputLbl" for="txtValor">Valor</label>
+								<pe:inputNumber id="txtValor" onfocus="ativarLabel(this)" onblur="limparMascara(this)" decimalPlaces="2" decimalSeparator=","
+									thousandSeparator="." value="#{contratoBean.contrato.valor}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m3">
+								<label id="txtMulta_inputLbl" for="txtMulta">Multa</label>
+								<pe:inputNumber id="txtMulta" onfocus="ativarLabel(this)" onblur="limparMascara(this)" decimalPlaces="2" decimalSeparator=","
+									thousandSeparator="." value="#{contratoBean.contrato.multa}" maxValue="100" symbol=" %" symbolPosition="right" />
+							</div>
+							<div class="input-field col s12 m3">
+								<label id="txtJuros_inputLbl" for="txtJuros">Juros</label>
+								<pe:inputNumber id="txtJuros" onfocus="ativarLabel(this)" onblur="limparMascara(this)" decimalPlaces="2" decimalSeparator=","
+									thousandSeparator="." value="#{contratoBean.contrato.juros}" maxValue="100" symbol=" %" symbolPosition="right" />
+							</div>
+							<div class="input-field col s12 m3">
+								<label id="txtDesconto_inputLbl" for="txtDesconto">Desconto</label>
+								<pe:inputNumber id="txtDesconto" onfocus="ativarLabel(this)" onblur="limparMascara(this)" decimalPlaces="2" decimalSeparator=","
+									thousandSeparator="." value="#{contratoBean.contrato.desconto}" />
+							</div>
+							<div class="col s12 m3 combo" style="margin-top: 15px">
+								<mp:checkbox value="#{contratoBean.contrato.planoFuneral}" itemLabel="Plano Funeral" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m4">
+								<h:selectOneMenu id="cmbTipo" value="#{contratoBean.contrato.tipoPagamento}">
+									<f:selectItems value="#{contratoBean.tiposPagamentos}" var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo.codigo}" />
+									<p:ajax update="pnConta" process="@form" />
+								</h:selectOneMenu>
+								<label for="cmbTipo">Tipo Pagamento</label>
+							</div>
+							<div class="input-field col s12 m8">
+								<p:outputPanel id="pnConta">
+									<p:outputPanel rendered="#{contratoBean.renderizarConta}">
+										<h:selectOneMenu id="cmbConta" value="#{contratoBean.contrato.conta.id}" onchange="validar(this)">
+											<f:selectItem itemLabel="Selecione..." itemValue="" />
+											<f:selectItems value="#{contratoBean.contas}" var="conta" itemLabel="#{conta.nome}" itemValue="#{conta.id}" />
+										</h:selectOneMenu>
+										<label for="cmbConta">Conta</label>
+									</p:outputPanel>
+
+									<script type="text/javascript">
+										$(document).ready(function() {
+											$('#cmbConta').material_select();
+										});
+									</script>
+								</p:outputPanel>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m4">
+								<label id="txtAssinaturaLbl" for="txtAssinatura">Data Assinatura</label>
+								<p:inputMask id="txtAssinatura" onblur="limparMascara(this)" styleClass="validate" mask="99/99/9999"
+									value="#{contratoBean.contrato.dataAssinatura}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<p:ajax event="blur" listener="#{contratoBean.atualizarPrimeiraUltimaParcela}"
+										update="txtPrimeiraParcela, txtUltimaParcela, txtValorParcela" process="@form" />
+								</p:inputMask>
+							</div>
+							<div class="input-field col s12 m4">
+								<label id="txtPrimeiraParcelaLbl" for="txtPrimeiraParcela">Primeira Parcela</label>
+								<p:inputMask id="txtPrimeiraParcela" onblur="limparMascara(this)" styleClass="validate" mask="99/99/9999"
+									value="#{contratoBean.contrato.primeiraParcela}">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+									<p:ajax event="blur" listener="#{contratoBean.atualizarPrimeiraUltimaParcela}" update="txtUltimaParcela, txtValorParcela"
+										process="@form" />
+								</p:inputMask>
+							</div>
+							<div class="input-field col s12 m4">
+								<label id="txtQtdParcelas_inputLbl" for="txtQtdParcelas">Qtd. Parcelas</label>
+								<pe:inputNumber id="txtQtdParcelas" onfocus="ativarLabel(this)" onblur="limparMascara(this)" decimalPlaces="0" maxValue="99"
+									value="#{contratoBean.contrato.quantidadeParcelas}">
+									<p:ajax event="blur" listener="#{contratoBean.atualizarPrimeiraUltimaParcela}"
+										update="txtPrimeiraParcela, txtUltimaParcela, txtValorParcela" process="@form" />
+								</pe:inputNumber>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12 m6">
+								<label for="txtUltimaParcela">Última Parcela</label>
+								<p:inputMask id="txtUltimaParcela" mask="99/99/9999" value="#{contratoBean.contrato.ultimaParcela}" readonly="true">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</div>
+							<div class="col s12 m6">
+								<label for="txtValorParcela">Valor Parcela</label>
+								<pe:inputNumber id="txtValorParcela" decimalPlaces="2" thousandSeparator="." decimalSeparator=","
+									value="#{contratoBean.contrato.valorParcela}" readonly="true" />
+							</div>
+						</div>
+					</p:outputPanel>
+					<div class="row right">
+						<div class="col s12">
+							<p:link outcome="/paginas/contrato/listarContratos" id="btnCancelar">
+								<f:param name="idCliente" value="#{contratoBean.idCliente}" />
+								<span><mp:icon name="mdi-navigation-arrow-back" /> Voltar</span>
+							</p:link>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnExcluir" styleClass="btn action waves-effect waves-light red darken-2" actionListener="#{contratoBean.excluir}"
+								ajax="true" update="formContrato" rendered="#{(usuarioLogadoBean.nivel == 1 and contratoBean.editando)}">
+								<span>Excluir <i class="mdi-action-delete" style="vertical-align: top" />
+								</span>
+							</p:commandLink>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnSalvar" actionListener="#{contratoBean.salvar}" styleClass="btn action waves-effect waves-light green darken-2"
+								ajax="true" update="formContrato" rendered="#{!contratoBean.editando}">
+								<span>Salvar <i class="mdi-content-send" style="vertical-align: top" /></span>
+							</p:commandLink>
+						</div>
+					</div>
+					<div class="row"></div>
+					<div class="row"></div>
+				</div>
+			</div>
+
+			<p:outputPanel rendered="#{contratoBean.editando}">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title" style="color: black">Parcelas</span>
+
+						<div class="row"></div>
+						<div class="row">
+							<div class="col s12">
+								<p:dataTable id="dtbParcelas" value="#{contratoBean.parcelas}" var="parcela" rows="12" paginator="true" paginatorPosition="bottom"
+									emptyMessage="Nenhum registro foi encontrado.">
+
+									<p:column headerText="Código">
+										<h:outputText value="#{parcela.contrato.tipoPagamento eq 1 ? parcela.boleto.id : parcela.id}" />
+									</p:column>
+									<p:column headerText="Parcela">
+										<h:outputText value="#{parcela.numeroParcela}/#{parcela.contrato.quantidadeParcelas}" />
+									</p:column>
+									<p:column headerText="Vencimento" styleClass="center">
+										<center>
+											<h:outputText value="#{parcela.vencimento}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</center>
+									</p:column>
+									<p:column headerText="Pagamento" styleClass="center">
+										<center>
+											<h:outputText value="#{parcela.pagamento != null ? parcela.pagamento : '-'}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</center>
+									</p:column>
+									<p:column headerText="Valor parcela" styleClass="center">
+										<center>
+											<h:outputText value="#{parcela.valor}" />
+										</center>
+									</p:column>
+									<p:column headerText="Valor pago" styleClass="center">
+										<center>
+											<h:outputText value="#{parcela.valorPagamento != null ? parcela.valorPagamento : '-'}" />
+										</center>
+									</p:column>
+
+									<p:column headerText="Estornar" styleClass="center" rendered="#{usuarioLogadoBean.nivel == 1}">
+										<center>
+											<p:commandLink id="btnEstornar" oncomplete="$('#modal2').openModal();" update="pnBaixas" rendered="#{parcela.pagamento != null}">
+												<i class="mdi-content-reply-all" />
+												<f:setPropertyActionListener target="#{baixaBean.parcela}" value="#{parcela}" />
+												<f:setPropertyActionListener target="#{baixaBean.bloqueado}" value="#{true}" />
+												<f:setPropertyActionListener target="#{baixaBean.estorno}" value="true" />
+											</p:commandLink>
+										</center>
+									</p:column>
+
+									<p:column headerText="Baixar" styleClass="center" rendered="#{usuarioLogadoBean.nivel == 1}">
+										<center>
+											<p:commandLink id="btnBaixar" oncomplete="$('#modal2').openModal();" update="pnBaixas">
+												<i class="mdi-editor-border-color" />
+												<f:setPropertyActionListener target="#{baixaBean.parcela}" value="#{parcela}" />
+												<f:setPropertyActionListener target="#{baixaBean.bloqueado}" value="#{parcela.pagamento != null ? true : false}" />
+												<f:setPropertyActionListener target="#{baixaBean.estorno}" value="false" />
+											</p:commandLink>
+										</center>
+									</p:column>
+
+								</p:dataTable>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<script type="text/javascript">
+					$(document).ready(function() {
+
+						$('#dtbParcelas').removeClass('ui-datatable');
+						$('table').addClass('striped responsive-table');
+					});
+				</script>
+			</p:outputPanel>
+
+			<!-- Modal Structure -->
+			<div id="modal1" class="modal modal-fixed-footer">
+				<div class="modal-content">
+					<p:outputPanel id="pnClientes">
+						<div class="row">
+							<div class="col s12">
+								<p:dataTable id="dtbClientes" value="#{contratoBean.clientes}" var="cliente" rows="10" paginator="true" paginatorPosition="bottom"
+									emptyMessage="Nenhum registro foi encontrado.">
+
+									<p:column headerText="Nome" filterBy="#{cliente.nome}" styleClass="filtro" filterMatchMode="contains">
+										<h:outputText value="#{cliente.nome}" />
+									</p:column>
+									<p:column headerText="Tipo" style="width:200px" filterBy="#{cliente.descricaoTipo}" filterMatchMode="contains" styleClass="filtro">
+										<h:outputText value="Pessoa Física" rendered="#{cliente.tipo eq 'F'}" />
+										<h:outputText value="Pessoa Jurídica" rendered="#{cliente.tipo eq 'J'}" />
+									</p:column>
+									<p:column headerText="Selecionar" style="width:100px">
+										<center>
+											<h:commandLink update="formContrato">
+												<f:setPropertyActionListener value="#{cliente}" target="#{contratoBean.cliente}" />
+												<mp:icon name="mdi-action-cached" />
+											</h:commandLink>
+										</center>
+									</p:column>
+
+								</p:dataTable>
+							</div>
+						</div>
+
+						<script type="text/javascript">
+							$(document).ready(function() {
+
+								$('#dtbClientes').removeClass('ui-datatable')
+								$('table').addClass('striped responsive-table');
+							});
+						</script>
+					</p:outputPanel>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat "><i class="mdi-navigation-arrow-back"
+						style="vertical-align: bottom" />Voltar</a>
+				</div>
+			</div>
+
+			<!-- Modal Structure -->
+			<div id="modal2" class="modal modal-fixed-footer">
+				<div class="modal-content">
+					<p:outputPanel id="pnBaixas">
+						<div class="card">
+							<div class="card-content">
+								<span class="card-title" style="color: black">Contrato/Parcela</span>
+								<div class="row">
+									<div class="col s12">
+										<label for="txtClientePag">Cliente</label>
+										<p:inputText id="txtClientePag" value="#{contratoBean.cliente.nome}" disabled="true" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s6">
+										<label for="txtPlanoPag">Plano</label>
+										<p:inputText id="txtPlanoPag" value="#{baixaBean.parcela.contrato.plano.nome}" disabled="true" />
+									</div>
+									<div class="col s6">
+										<label for="txtValorPag">Valor</label>
+										<p:inputText id="txtValorPag" value="#{baixaBean.parcela.contrato.valor}" disabled="true" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s4">
+										<label for="txtParcelaPag">Parcela</label>
+										<p:inputText id="txtParcelaPag" value="#{baixaBean.parcela.numeroParcela}" disabled="true" />
+									</div>
+									<div class="col s4">
+										<label for="txtVencimentoPag">Vencimento</label>
+										<p:inputText id="txtVencimentoPag" value="#{baixaBean.parcela.vencimento}" disabled="true">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</p:inputText>
+									</div>
+									<div class="col s4">
+										<label for="txtValorParcelaPag">Valor parcela</label>
+										<p:inputText id="txtValorParcelaPag" value="#{baixaBean.parcela.valor}" disabled="true" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="col s6">
+										<label for="txtPagamentoPag">Data pagamento</label>
+										<p:inputMask id="txtPagamentoPag" styleClass="validate" mask="99/99/9999" value="#{baixaBean.parcela.pagamento}"
+											disabled="#{baixaBean.bloqueado}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</p:inputMask>
+									</div>
+									<div class="col s6">
+										<label for="txtValorPagamentoPag">Valor pagamento</label>
+										<pe:inputNumber id="txtValorPagamentoPag" decimalPlaces="2" decimalSeparator="," thousandSeparator="."
+											value="#{baixaBean.parcela.valorPagamento}" styleClass="validate" disabled="#{baixaBean.bloqueado}" />
+									</div>
+								</div>
+								<div class="row right">
+									<div class="col s12">
+										<h:commandLink id="btnBaixar" styleClass="btn action waves-effect waves-light red darken-2" actionListener="#{baixaBean.baixar}"
+											rendered="#{!baixaBean.bloqueado and !baixaBean.estorno}" update="dtbParcelas">
+											<span>Baixar <i class="mdi-navigation-check" style="vertical-align: top" />
+											</span>
+										</h:commandLink>
+									</div>
+								</div>
+								<div class="row right">
+									<div class="col s12">
+										<h:commandLink id="btnEstornar" styleClass="btn action waves-effect waves-light red darken-2"
+											actionListener="#{baixaBean.estornar}" rendered="#{baixaBean.estorno}" update="dtbParcelas">
+											<span>Estornar <i class="mdi-content-reply-all" style="vertical-align: top" />
+											</span>
+										</h:commandLink>
+									</div>
+								</div>
+							</div>
+						</div>
+					</p:outputPanel>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat "><i class="mdi-navigation-arrow-back"
+						style="vertical-align: bottom" />Voltar</a>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				$(document).ready(function() {
+
+					$('select').not('#cmbConta').material_select();
+
+					$('#dtbParcelas').removeClass('ui-datatable');
+					$('table').addClass('striped responsive-table');
+
+					$(".form input").each(function() {
+
+						if (($(this).val() != '')) {
+
+							if (($(this).val() != 'Selecione...')) {
+
+								if (!$(this).hasClass('valid')) {
+
+									$(this).addClass('valid');
+									$('#' + $(this).attr('id') + 'Lbl').addClass('active');
+								}
+							}
+						}
+					});
+				});
+
+				function validar(obj) {
+
+					if ($(obj).val() != '') {
+
+						$(obj).prev().prev().addClass('valid');
+					} else {
+
+						$(obj).prev().prev().removeClass('valid');
+					}
+
+				}
+
+				function limparMascara(obj) {
+
+					if (($(obj).val() == '__/__/____') || ($(obj).val() == '')) {
+
+						$(obj).val('');
+
+						$(obj).removeClass('valid');
+						$('#' + $(obj).attr('id') + 'Lbl').removeClass('active');
+					} else {
+
+						$(obj).addClass('valid');
+					}
+				}
+
+				function ativarLabel(obj) {
+
+					$('#' + $(obj).attr('id') + 'Lbl').addClass('active');
+				}
+			</script>
+		</h:form>
+	</ui:define>
+</ui:composition>

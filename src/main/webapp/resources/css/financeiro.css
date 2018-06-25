@@ -1,0 +1,133 @@
+header, main, footer {
+	padding-left: 240px;
+}
+
+@media only screen and (max-width : 992px) {
+	header, main, footer {
+		padding-left: 0;
+	}
+}
+
+.btn.action:hover {
+	box-shadow: 0px 12px 15px 0px rgba(0, 0, 0, 0.24), 0px 17px 50px 0px rgba(0, 0, 0, 0.19);
+}
+
+ul.side-nav.fixed li.logo {
+	text-align: center;
+	margin-bottom: 120px;
+}
+
+.waves-effect.waves-cyan .waves-ripple {
+	background-color: rgba(64, 196, 255, 0.65);
+}
+
+.ui-paginator-page.ui-state-active {
+	color: #c62828 !important;
+}
+
+span.ui-paginator-next:after {
+	content: "\e845" !important;
+	font-family: "Material-Design-Icons"
+}
+
+span.ui-paginator-last:after {
+	content: "\e6c8" !important;
+	font-family: "Material-Design-Icons"
+}
+
+span.ui-paginator-first:after {
+	content: "\e6c9" !important;
+	font-family: "Material-Design-Icons"
+}
+
+span.ui-paginator-prev:after {
+	content: "\e844" !important;
+	font-family: "Material-Design-Icons"
+}
+
+.dropdown-content {
+	max-height: 150px !important;
+}
+
+.filtro input {
+	background-color: transparent !important;
+	border-width: medium medium 1px !important;
+	border-style: none none solid !important;
+	border-color: -moz-use-text-color -moz-use-text-color #9E9E9E !important;
+	-moz-border-top-colors: none !important;
+	-moz-border-right-colors: none !important;
+	-moz-border-bottom-colors: none !important;
+	-moz-border-left-colors: none !important;
+	border-image: none !important;
+	border-radius: 0px !important;
+	outline: medium none !important;
+	height: 20px !important;
+	width: 70% !important;
+	font-size: 1rem !important;
+	margin: 0px 10px !important;
+	padding: 0px !important;
+	box-shadow: none !important;
+	box-sizing: content-box !important;
+	transition: all 0.3s ease 0s !important;
+}
+
+.filtro .ui-column-customfilter {
+	width: 70% !important;
+}
+
+.container {
+	width: 80% !important;
+}
+
+.combo .input-field {
+	margin-top: 0;
+}
+
+.mat-check > div > div {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	border-radius: 2px;
+	font-size: 1em;
+	box-shadow: 0px 1px 0px #FFF inset;
+	border: 1px solid #A8A8A8;
+	background: #C4C4C4 -moz-linear-gradient(center top, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0)) repeat scroll 0% 0%;
+	font-weight: bold;
+	color: #4F4F4F;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
+}
+
+.mat-check > div > div.ui-state-active {
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	border-radius: 2px;
+	border: 1px solid #7096AB;
+	background: #2196f3 -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0)), to(rgba(255,255,255,0.4)));
+	background: #2196f3 -moz-linear-gradient(center top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.4)) repeat scroll 0% 0%;
+	font-weight: bold;
+	color: #1C4257;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.7);
+	cursor: pointer;
+}
+
+.center {
+	text-align: center !important;
+}
+
+.bg {
+    margin: 0 0 10px;
+    padding: 15px;
+}
+
+.bg-success {
+    background-color: #dff0d8;
+}
+
+.bg-warning {
+    background-color: #fcf8e3;
+}
+
+.bg-danger {
+    background-color: #f2dede;
+}

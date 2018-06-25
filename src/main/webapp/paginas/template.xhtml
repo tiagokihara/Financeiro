@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core" xmlns:p="http://primefaces.org/ui"
+	xmlns:mp="http://primefaces.org/ui/material">
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<title><h:outputText value="..:Financeiro:.." /></title>
+
+		<h:outputStylesheet library="css" name="financeiro.css" />
+
+	</f:facet>
+</h:head>
+<h:body class="grey lighten-4">
+	<script type="text/javascript">
+		$(document).ready(function() {
+			// Show sideNav
+			$('.button-collapse').sideNav();
+		});
+	</script>
+	<header>
+		<h:form id="formHeader">
+			<div class="navbar-fixed">
+				<nav class="blue">
+					<div class="nav-wrapper">
+						<h:link outcome="/paginas/index" class="brand-logo" style="padding-left: 10px">Financeiro</h:link>
+						<ul class="right hide-on-med-and-down">
+							<li><a href="#" class="waves-effect waves-light">
+									<i class="mdi-action-account-box left" />
+									<h:outputText value="#{usuarioLogadoBean.nome}" />
+								</a></li>
+							<li style="padding-right: 240px"><h:commandLink styleClass="waves-effect waves-light" action="#{loginBean.sair}">
+									<i class="mdi-action-exit-to-app" />
+								</h:commandLink></li>
+						</ul>
+						<ul style="width: 240px; left: -250px;" id="nav-mobile" class="side-nav fixed grey lighten-4">
+							<li class="logo" style="padding-left: 40px"><a id="logo-container" href="#!" class="brand-logo">
+									<p:graphicImage library="imagens" name="logo.png" />
+								</a></li>
+							<li class="bold" style="border-top: 1px solid #ccc;"><h:link outcome="/paginas/plano/listarPlanos"
+									class="waves-effect waves-red">Planos</h:link></li>
+							<li class="bold"><h:link outcome="/paginas/cliente/listarClientes" class="waves-effect waves-red">Clientes</h:link></li>
+							<li class="bold"><h:link outcome="/paginas/contrato/listarContratos" class="waves-effect waves-red">Contratos</h:link></li>
+							<li class="bold"><h:link outcome="/paginas/boleto/formBaixarBoletoCarne" class="waves-effect waves-red"
+									rendered="#{usuarioLogadoBean.nivel eq 1}">Baixas</h:link></li>
+							<li class="bold"><h:link outcome="/paginas/boleto/listarRemessas" class="waves-effect waves-red"
+									rendered="#{usuarioLogadoBean.nivel eq 1}">Remessas</h:link></li>
+							<li class="bold"><h:link outcome="/paginas/contas/formRelatorioContasReceber" class="waves-effect waves-red">Contas a Receber</h:link></li>
+						</ul>
+						<a href="#" data-activates="nav-mobile" class="button-collapse top-nav full hide-on-large-only">
+							<i class="mdi-navigation-menu"></i>
+						</a>
+					</div>
+				</nav>
+			</div>
+		</h:form>
+	</header>
+	<main>
+	<div class="container">
+		<ui:insert name="conteudo" />
+	</div>
+	</main>
+</h:body>
+</html>

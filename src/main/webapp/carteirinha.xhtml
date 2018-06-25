@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:mp="http://primefaces.org/ui/material">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<title><h:outputText value="..:Financeiro:.." /></title>
+
+		<h:outputStylesheet library="css" name="financeiro.css" />
+
+	</f:facet>
+
+</h:head>
+
+<h:body styleClass="grey lighten-4 loaded">
+
+	<div class="container">
+
+		<div class="row center-align">
+			<div class="col s6 offset-s3">
+				<mp:image library="imagens" name="logo_carteirinha.png" width="200px" height="200px" />
+			</div>
+		</div>
+
+		<h:form id="formCarteirinha" prependId="false">
+
+			<p:defaultCommand target="btnConsultar"></p:defaultCommand>
+			
+			<p:focus for="carteirinha"></p:focus>
+
+			<div class="row center-align">
+
+				<div class="col s6 offset-s3">
+
+					<div class="card">
+						<div class="card-content">
+							<span class="card-title" style="color: black">Consulta de carteirinha</span>
+
+							<p:outputPanel id="pnFormulario">
+
+								<div class="row">
+									<div class="input-field col s12">
+										<h:outputLabel for="carteirinha" value="Informe o número da carteirinha"></h:outputLabel>
+										<h:inputText id="carteirinha" styleClass="validate" value="#{contratoBean.cliente.id}" onkeyup="somenteNumeros(this)" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="input-field col s12">
+										<label id="txtCpfLbl" for="txtCpf">CPF</label>
+										<p:inputMask id="txtCpf" styleClass="validate" mask="999.999.999-99" value="#{contratoBean.cliente.cpf}"
+											onblur="limparMascara(this)" />
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col s12">
+										<p:commandLink id="btnConsultar" styleClass="waves-effect waves-light btn blue-grey darken-1"
+											actionListener="#{contratoBean.consultarCarteirinha}" style="width: 100%" update="pnResultado">
+											<span> Consultar <i class="mdi-action-search" style="vertical-align: top" />
+											</span>
+										</p:commandLink>
+									</div>
+								</div>
+
+							</p:outputPanel>
+							<p:outputPanel id="pnResultado">
+
+								<p:outputPanel rendered="#{contratoBean.consultou and contratoBean.contrato.cliente.id != null}">
+									<div class="row">
+										<div class="col s12">
+											Cliente:
+											<h:outputText value="#{contratoBean.contrato.cliente.nome}" />
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s12">
+											Validade:
+											<h:outputText value="#{contratoBean.contrato.dataAssinatura}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+											até
+											<h:outputText value="#{contratoBean.contrato.validadeContrato}">
+												<f:convertDateTime pattern="dd/MM/yyyy" />
+											</h:outputText>
+										</div>
+									</div>
+								</p:outputPanel>
+
+								<p:outputPanel rendered="#{contratoBean.consultou}">
+
+									<div class="row">
+										<div class="col s12">
+											<p:outputPanel rendered="#{contratoBean.mensagemValidade == 'Atendimento Liberado!'}">
+												<p class="bg bg-success" style="text-align: center">
+													<h:outputText value="#{contratoBean.mensagemValidade}" />
+												</p>
+											</p:outputPanel>
+											<p:outputPanel rendered="#{contratoBean.mensagemValidade == 'Carteirinha não encontrada!'}">
+												<p class="bg bg-danger" style="text-align: center">
+													<h:outputText value="#{contratoBean.mensagemValidade}" />
+												</p>
+											</p:outputPanel>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col s12">
+											<p:outputPanel rendered="#{contratoBean.mensagemAtraso != null}">
+												<p class="bg bg-danger" style="text-align: center">
+													<h:outputText value="#{contratoBean.mensagemAtraso}" />
+												</p>
+											</p:outputPanel>
+										</div>
+									</div>
+								</p:outputPanel>
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+		<mp:toast />
+	</div>
+	<script type="text/javascript">
+		function somenteNumeros(input) {
+			$(input).val($(input).val().replace(/[^\d]/, ''));
+		}
+		
+		function limparMascara(obj) {
+
+			if ($(obj).val() == '___.___.___-__') {
+
+				$(obj).val('');
+
+				$(obj).removeClass('valid');
+				$('#' + $(obj).attr('id') + 'Lbl').removeClass('active');
+			}
+		}
+	</script>
+</h:body>
+</html>

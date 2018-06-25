@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+
+	<persistence-unit name="FinanceiroPu"
+		transaction-type="RESOURCE_LOCAL">
+
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<non-jta-data-source>java:jboss/datasources/PostgreSQLDS</non-jta-data-source>
+		
+		<class>br.com.tksoft.financeiro.entity.Cliente</class>
+		<class>br.com.tksoft.financeiro.entity.Usuario</class>
+		<class>br.com.tksoft.financeiro.entity.Plano</class>
+		<class>br.com.tksoft.financeiro.entity.EstadoCivil</class>
+		<class>br.com.tksoft.financeiro.entity.Parentesco</class>
+		<class>br.com.tksoft.financeiro.entity.Dependente</class>
+		<class>br.com.tksoft.financeiro.entity.Contrato</class>
+		<class>br.com.tksoft.financeiro.entity.ContratoParcela</class>
+		<class>br.com.tksoft.financeiro.entity.Conta</class>
+		<class>br.com.tksoft.financeiro.entity.Boleto</class>
+		<class>br.com.tksoft.financeiro.entity.Remessa</class>
+		<class>br.com.tksoft.financeiro.entity.RemessaBoleto</class>
+
+		<properties>
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
+			<property name="hibernate.current_session_context_class" value="jta" />
+			<property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.JBossTransactionManagerLookup" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+		</properties>
+
+	</persistence-unit>
+
+</persistence>

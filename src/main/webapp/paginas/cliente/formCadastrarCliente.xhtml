@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	xmlns:pe="http://primefaces.org/ui/extensions" template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="idCliente" value="#{clienteBean.cliente.id}" />
+			<f:event type="preRenderView" listener="#{clienteBean.carregarCliente}" />
+		</f:metadata>
+
+		<p:blockUI block="pnDadosClientes" blocked="#{clienteBean.cliente.dataFim != null}" widgetVar="block" />
+		
+		<p:focus for="txtNome" />
+
+		<h:form id="formCliente" prependId="false" styleClass="form">
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Cadastrar Cliente</span>
+					<p:outputPanel id="pnDadosClientes">
+						<div class="row">
+							<div class="input-field col s12">
+								<mp:radioButton withGap="true" value="#{clienteBean.cliente.tipo}">
+									<f:selectItem itemLabel="Pessoa física" itemValue="F" />
+									<f:selectItem itemLabel="Pessoa jurídica" itemValue="J" />
+									<p:ajax update="formCliente" process="@this" immediate="true" />
+								</mp:radioButton>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<h:outputLabel for="txtNome" value="Nome"></h:outputLabel>
+								<h:inputText id="txtNome" label="Nome" styleClass="validate" value="#{clienteBean.cliente.nome}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m6">
+								<p:outputPanel id="pnRg">
+									<p:outputPanel rendered="#{clienteBean.cliente.tipo eq 'F'}">
+										<label for="txtRg">RG</label>
+										<p:inputText id="txtRg" styleClass="validate" value="#{clienteBean.cliente.rg}" />
+									</p:outputPanel>
+									<p:outputPanel rendered="#{clienteBean.cliente.tipo eq 'J'}">
+										<label for="txtInscMunicipal">Inscrição Municipal</label>
+										<p:inputText id="txtInscMunicipal" styleClass="validate" value="#{clienteBean.cliente.inscricaoMunicipal}" />
+									</p:outputPanel>
+								</p:outputPanel>
+							</div>
+							<div class="input-field col s12 m6">
+								<p:outputPanel id="pnCpf">
+									<p:outputPanel rendered="#{clienteBean.cliente.tipo eq 'F'}">
+										<label id="txtCpfLbl" for="txtCpf">CPF</label>
+										<p:inputMask id="txtCpf" styleClass="validate" mask="999.999.999-99" value="#{clienteBean.cliente.cpf}"
+											onblur="limparMascara(this)" />
+									</p:outputPanel>
+									<p:outputPanel rendered="#{clienteBean.cliente.tipo eq 'J'}">
+										<label id="txtCnpjLbl" for="txtCnpj">CNPJ</label>
+										<p:inputMask id="txtCnpj" styleClass="validate" mask="99.999.999/9999-99" value="#{clienteBean.cliente.cnpj}"
+											onblur="limparMascara(this)" />
+									</p:outputPanel>
+								</p:outputPanel>
+							</div>
+						</div>
+						<p:outputPanel rendered="#{clienteBean.cliente.tipo eq 'F'}">
+							<div class="row">
+								<div class="input-field col s12 m4">
+									<label id="txtNascimentoLbl" for="txtNascimento">Nascimento</label>
+									<p:inputMask id="txtNascimento" onblur="limparMascara(this)" styleClass="validate" mask="99/99/9999"
+										value="#{clienteBean.cliente.nascimento}">
+										<f:convertDateTime pattern="dd/MM/yyyy" />
+									</p:inputMask>
+								</div>
+								<div class="input-field col s12 m4">
+									<h:selectOneMenu id="cmbSexo" value="#{clienteBean.cliente.sexo}">
+										<f:selectItem itemLabel="Masculino" itemValue="M" />
+										<f:selectItem itemLabel="Feminino" itemValue="F" />
+									</h:selectOneMenu>
+									<label for="cmbSexo">Sexo</label>
+								</div>
+								<div class="input-field col s12 m4">
+									<h:selectOneMenu id="cmbEstadoCivil" value="#{clienteBean.cliente.estadoCivil.id}" onchange="validar(this)">
+										<f:selectItem noSelectionOption="true" itemLabel="Selecione..." itemValue="" />
+										<f:selectItems value="#{clienteBean.estadosCivis}" var="estadoCivil" itemLabel="#{estadoCivil.descricao}"
+											itemValue="#{estadoCivil.id}" />
+									</h:selectOneMenu>
+									<label for="cmbEstadoCivil">Estado civil</label>
+								</div>
+							</div>
+						</p:outputPanel>
+						<p:outputPanel rendered="#{clienteBean.cliente.tipo eq 'F'}">
+							<div class="row">
+								<div class="input-field col s12 m6">
+									<label for="txtProfissao">Profissão</label>
+									<p:inputText id="txtProfissao" styleClass="validate" value="#{clienteBean.cliente.profissao}" />
+								</div>
+								<div class="input-field col s12 m6">
+									<label for="txtLocalTrabalho">Local de trabalho</label>
+									<p:inputText id="txtLocalTrabalho" styleClass="validate" value="#{clienteBean.cliente.localTrabalho}" />
+								</div>
+							</div>
+						</p:outputPanel>
+						<div class="row">
+							<div class="input-field col s12 m6">
+								<label id="txtTelefoneLbl" for="txtTelefone">Telefone</label>
+								<p:inputMask id="txtTelefone" onblur="limparMascara(this)" mask="(99)9999-9999" styleClass="validate"
+									value="#{clienteBean.cliente.telefone}" />
+							</div>
+							<div class="input-field col s12 m6">
+								<label id="txtCelularLbl" for="txtCelular">Celular</label>
+								<p:inputMask id="txtCelular" onblur="limparMascara(this)" mask="(99)99999-9999" styleClass="validate"
+									value="#{clienteBean.cliente.celular}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m6">
+								<label id="txtCelular2Lbl" for="txtCelular2">Celular 2</label>
+								<p:inputMask id="txtCelular2" onblur="limparMascara(this)" mask="(99)99999-9999" styleClass="validate"
+									value="#{clienteBean.cliente.celular2}" />
+							</div>
+							<div class="input-field col s12 m6">
+								<label id="txtCelular3Lbl" for="txtCelular3">Celular 3</label>
+								<p:inputMask id="txtCelular3" onblur="limparMascara(this)" mask="(99)99999-9999" styleClass="validate"
+									value="#{clienteBean.cliente.celular3}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<label for="txtEmail">E-mail</label>
+								<p:inputText id="txtEmail" styleClass="validate" value="#{clienteBean.cliente.email}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<label for="txtLogradouro">Logradouro</label>
+								<p:inputText id="txtLogradouro" styleClass="validate" value="#{clienteBean.cliente.logradouro}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m6">
+								<label for="txtNumero">Número</label>
+								<p:inputText id="txtNumero" styleClass="validate" value="#{clienteBean.cliente.numero}" />
+							</div>
+							<div class="input-field col s12 m6">
+								<label for="txtComplemento">Complemento</label>
+								<p:inputText id="txtComplemento" styleClass="validate" value="#{clienteBean.cliente.complemento}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<label for="txtBairro">Bairro</label>
+								<p:inputText id="txtBairro" styleClass="validate" value="#{clienteBean.cliente.bairro}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m5">
+								<label for="txtCidade">Cidade</label>
+								<p:inputText id="txtCidade" styleClass="validate" value="#{clienteBean.cliente.cidade}" />
+							</div>
+							<div class="input-field col s12 m4">
+								<h:selectOneMenu id="cmbEstado" value="#{clienteBean.cliente.uf}" styleClass="combo" onchange="validar(this)">
+									<f:selectItem itemLabel="Selecione..." noSelectionOption="true" itemValue="" />
+									<f:selectItems value="#{clienteBean.estados}" var="estado" itemLabel="#{estado.nome}" itemValue="#{estado.sigla}" />
+								</h:selectOneMenu>
+								<label for="cmbEstado">Estado</label>
+							</div>
+							<div class="input-field col s12 m3">
+								<label id="txtCepLbl" for="txtCep">Cep</label>
+								<p:inputMask id="txtCep" onblur="limparMascara(this)" mask="99999-999" styleClass="validate" value="#{clienteBean.cliente.cep}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12">
+								<label for="txtObs">Observação</label>
+								<p:inputTextarea id="txtObs" rows="5" cols="30" counter="display" value="#{clienteBean.cliente.observacao}" maxlength="1000"
+									counterTemplate="{0} caracters restantes." autoResize="false" styleClass="materialize-textarea validate" />
+								<h:outputText id="display" />
+							</div>
+						</div>
+					</p:outputPanel>
+					<div class="row right">
+						<div class="col s12">
+							<p:link outcome="/paginas/cliente/listarClientes" id="btnCancelar">
+								<span><mp:icon name="mdi-navigation-arrow-back" /> Voltar</span>
+							</p:link>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnExcluir" styleClass="btn action waves-effect waves-light red darken-2" actionListener="#{clienteBean.excluir}"
+								ajax="true" update="formCliente" rendered="#{(clienteBean.cliente.id != null and clienteBean.cliente.dataFim == null)}">
+								<span>Excluir <i class="mdi-action-delete" style="vertical-align: top" />
+								</span>
+							</p:commandLink>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnSalvar" actionListener="#{clienteBean.salvar}" styleClass="btn action waves-effect waves-light green darken-2"
+								ajax="true" update="formCliente" rendered="#{clienteBean.cliente.dataFim == null}">
+								<span>Salvar <i class="mdi-content-send" style="vertical-align: top" /></span>
+							</p:commandLink>
+						</div>
+					</div>
+					<div class="row"></div>
+					<div class="row"></div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				$(document).ready(function() {
+
+					$('select').material_select();
+
+					$(".form input, textarea").each(function() {
+
+						if (($(this).val() != '')) {
+
+							if (($(this).val() != 'Selecione...')) {
+
+								if (!$(this).hasClass('valid')) {
+
+									$(this).addClass('valid');
+								}
+							}
+						}
+					});
+
+				});
+
+				function limparMascara(obj) {
+
+					if (($(obj).val() == '___.___.___-__') || ($(obj).val() == '__.___.___/____-__') || ($(obj).val() == '(__)_____-____')
+							|| ($(obj).val() == '(__)____-____') || ($(obj).val() == '__/__/____') || ($(obj).val() == '_____-___')) {
+
+						$(obj).val('');
+
+						$(obj).removeClass('valid');
+						$('#' + $(obj).attr('id') + 'Lbl').removeClass('active');
+					}
+				}
+
+				function validar(obj) {
+
+					if ($(obj).val() != '') {
+
+						$(obj).prev().prev().addClass('valid');
+					} else {
+
+						$(obj).prev().prev().removeClass('valid');
+					}
+
+				}
+			</script>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

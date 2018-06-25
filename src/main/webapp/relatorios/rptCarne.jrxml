@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="boleto-default" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ff653490-88f9-4546-aaa6-53f137c26ccc">
+	<property name="ireport.zoom" value="0.9313819845887326"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Celula" forecolor="#646464" fontName="Arial" fontSize="5" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.0" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Txt_Normal" fontName="Arial" fontSize="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false">
+		<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+			<pen lineWidth="0.5"/>
+			<topPen lineWidth="0.0"/>
+			<leftPen lineWidth="0.5"/>
+			<bottomPen lineWidth="0.5"/>
+			<rightPen lineWidth="0.5"/>
+		</box>
+	</style>
+	<style name="Txt_Negrito" style="Txt_Normal" hAlign="Left" vAlign="Bottom" fontSize="11" isBold="true">
+		<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="2"/>
+	</style>
+	<style name="Txt_Peq" style="Txt_Normal" fontSize="7"/>
+	<style name="Txt_valor" style="Txt_Normal" hAlign="Right" pattern="###0.00">
+		<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10"/>
+	</style>
+	<style name="Txt_Data" style="Txt_Normal" pattern="dd/MM/yyyy"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/Users/mario/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="BASE" class="java.io.InputStream" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cliente.nome]]></fieldDescription>
+	</field>
+	<field name="vencimento" class="java.util.Date">
+		<fieldDescription><![CDATA[vencimento]]></fieldDescription>
+	</field>
+	<field name="idCliente" class="java.lang.Long">
+		<fieldDescription><![CDATA[contrato.cliente.id]]></fieldDescription>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[valor]]></fieldDescription>
+	</field>
+	<field name="logradouro" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cliente.logradouro]]></fieldDescription>
+	</field>
+	<field name="cidade" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cliente.cidade]]></fieldDescription>
+	</field>
+	<field name="idParcela" class="java.lang.Long">
+		<fieldDescription><![CDATA[id]]></fieldDescription>
+	</field>
+	<field name="idContrato" class="java.lang.Long">
+		<fieldDescription><![CDATA[contrato.id]]></fieldDescription>
+	</field>
+	<field name="uf" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cliente.uf]]></fieldDescription>
+	</field>
+	<field name="cep" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cliente.cep]]></fieldDescription>
+	</field>
+	<field name="numero" class="java.lang.String">
+		<fieldDescription><![CDATA[contrato.cliente.numero]]></fieldDescription>
+	</field>
+	<field name="parcela" class="java.lang.Integer">
+		<fieldDescription><![CDATA[numeroParcela]]></fieldDescription>
+	</field>
+	<field name="quantidadeParcelas" class="java.lang.Integer">
+		<fieldDescription><![CDATA[contrato.quantidadeParcelas]]></fieldDescription>
+	</field>
+	<field name="desconto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[contrato.desconto]]></fieldDescription>
+	</field>
+	<detail>
+		<band height="401" splitType="Prevent">
+			<property name="local_mesure_unitheight" value="cm"/>
+			<staticText>
+				<reportElement uuid="001ddb45-1c2d-467a-83ba-588c749d3724" style="Celula" x="0" y="15" width="254" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Cedente]]></text>
+			</staticText>
+			<textField pattern="00000000000000000000" isBlankWhenNull="true">
+				<reportElement uuid="1f153a12-3665-46bb-8314-8460522f1cbc" style="Txt_Normal" x="254" y="25" width="299" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%020d", $F{idParcela})]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b84b6839-3dbd-445f-8705-3b8052763edc" style="Txt_Normal" x="0" y="25" width="254" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ESSENCIAL VIDA COB. CADASTRO LTDA. ME"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="53596950-7e80-4223-9cee-2019bc5f3706" style="Celula" x="354" y="41" width="100" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Data de Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9476fbf3-dbd9-44db-a458-de45abee4ef1" style="Celula" x="454" y="41" width="99" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Valor Documento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ba60b891-62a7-4e63-9591-9769ef2ff057" style="Txt_Data" x="354" y="51" width="100" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vencimento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1d5919bf-162d-49ff-8b7d-43d64d2a71b8" style="Txt_valor" x="454" y="51" width="99" height="16"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f64a2e9f-7773-4f96-ae5e-2f92a570603e" style="Celula" x="0" y="41" width="177" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Sacado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d90e325-2061-45a5-bea0-5eea21ec8c25" style="Celula" x="177" y="41" width="177" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Nosso Número]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9b0e8341-a44a-4d63-9135-2753b6fbedc7" style="Txt_Normal" x="0" y="51" width="177" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="02d3cdee-746c-4588-a51b-9c5f37f330f9" style="Txt_Normal" x="180" y="156" width="60" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DM"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="abcefd43-93dc-44be-a707-7d3cfce23a63" style="Txt_Normal" x="0" y="132" width="389" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["ESSENCIAL VIDA COB. CADASTRO LTDA. ME"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ea7afc65-37b8-4a52-9e2f-3800f91081ba" style="Celula" x="310" y="337" width="244" height="15"/>
+				<box topPadding="5" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Autenticação Mecânica - Ficha de compensação]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="439fd0d5-f592-41f0-85e9-61fa5fbfff99" style="Celula" x="90" y="146" width="90" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Nº do Documento]]></text>
+			</staticText>
+			<textField pattern="00000000000000000000" isBlankWhenNull="true">
+				<reportElement uuid="3ba3f307-b123-414a-a01e-36bfb72ab861" style="Txt_Negrito" x="157" y="75" width="396" height="23"/>
+				<box topPadding="2" leftPadding="5" bottomPadding="2" rightPadding="2">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right" markup="none">
+					<font fontName="SansSerif" size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[String.format("%020d", $F{idParcela})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8117e3e7-4e84-4b30-b71f-4b251a9d81dd" style="Celula" x="0" y="122" width="389" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Cedente]]></text>
+			</staticText>
+			<textField pattern="0000000000" isBlankWhenNull="true">
+				<reportElement uuid="1a991ed5-70b4-46f8-9549-e5de61e7caf6" style="Txt_Normal" x="90" y="156" width="90" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idParcela}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8f819e42-7c61-4d33-8cbe-03faa456e926" style="Txt_Data" mode="Opaque" x="389" y="108" width="164" height="14" backcolor="#D2D2D2"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{vencimento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="460aeeaa-3a27-4aec-b18b-68524ff57b75" style="Txt_Normal" x="240" y="156" width="59" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{parcela}.toString() + "/" + $F{quantidadeParcelas}.toString()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="389657b9-3967-440e-bf9f-a14ed34a42e1" style="Celula" mode="Opaque" x="389" y="261" width="164" height="11" backcolor="#D2D2D2"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[(=) Valor Cobrado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d06b1e0f-5940-42c4-8994-fd2bd51d7e7d" style="Celula" mode="Opaque" x="389" y="98" width="164" height="10" backcolor="#D2D2D2"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Vencimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0069431a-083b-4e16-87f9-1f9f2620d691" style="Celula" x="180" y="146" width="60" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Espécie Doc.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0c61a6f8-2ba7-45d1-b072-b1214c83d563" style="Txt_valor" x="389" y="220" width="164" height="6"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+			</textField>
+			<staticText>
+				<reportElement uuid="a1fa60ef-f4ae-48fb-a27b-7ae0419acb17" style="Celula" mode="Opaque" x="389" y="170" width="164" height="10" backcolor="#D2D2D2"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[(=) Valor do Documento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9e8779db-d8d9-4705-91e3-6ebb683efa87" style="Celula" mode="Transparent" x="389" y="194" width="164" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[(-) Desconto / Abatimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6e671458-fba4-43da-85e8-7727a3a04bfc" style="Celula" mode="Transparent" x="389" y="146" width="164" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Nosso Número]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5d86cad9-d805-45fb-a473-dc278bd3454f" style="Celula" x="0" y="98" width="389" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Local de Pagamento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="96cd37ba-bb49-4182-8942-17fdc7885eda" style="Txt_valor" x="389" y="204" width="164" height="6"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+			</textField>
+			<line>
+				<reportElement uuid="0d0e7b44-f85c-41cb-b616-aa1e08b02b30" x="0" y="71" width="553" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="548ae6b2-f90c-40c3-b5ca-44ff939de459" style="Txt_Normal" x="0" y="287" width="553" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0" lineStyle="Solid"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3e79e7e1-ac06-44fb-bf46-7643a0041d11" style="Celula" mode="Transparent" x="389" y="210" width="164" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[(-) Outras Deduções]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d17ced91-6210-4152-8e54-1533c773b6fa" style="Celula" mode="Transparent" x="389" y="122" width="164" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Código do Cedente]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e14e0139-d56b-482b-a7b5-9b3d76907a52" style="Txt_valor" x="389" y="252" width="164" height="9"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7ef37737-2749-4c17-8170-04864aef9857" style="Txt_Normal" x="0" y="300" width="553" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{logradouro} + ", " + $F{numero}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="34b42bca-6472-430e-a86b-571e78a0edef" style="Txt_valor" mode="Opaque" x="389" y="272" width="164" height="6" backcolor="#D2D2D2"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+			</textField>
+			<staticText>
+				<reportElement uuid="1dea584a-47c2-4b4f-af48-0dd9176d8cf0" style="Celula" mode="Transparent" x="389" y="226" width="164" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[(+) Juros / Multa]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="eb0fa992-6435-4867-8bc8-1d632bc9ab28" style="Txt_Normal" x="0" y="313" width="144" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cidade}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="36676b16-754f-4b7f-a48e-8019c6ea21e0" style="Txt_valor" mode="Opaque" x="389" y="180" width="164" height="14" backcolor="#D2D2D2"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b50cf889-5f4f-490c-9866-1aae93f3fe4e" style="Txt_Data" x="299" y="156" width="90" height="14"/>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3a08b48d-7aff-418f-beb0-385b0580d7b5" style="Celula" x="0" y="146" width="90" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Data do Documento]]></text>
+			</staticText>
+			<textField pattern="0000000000" isBlankWhenNull="true">
+				<reportElement uuid="f12c8199-760a-46a6-a53c-132422c7158f" style="Txt_Normal" x="389" y="132" width="164" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{idCliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f030d527-74ed-46e3-9165-eb498cb0d8e7" style="Celula" x="299" y="146" width="90" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Data de Processamento]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="74556a06-6fbc-4440-a857-a10ffe2ebd28" style="Txt_Data" x="0" y="156" width="90" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="90a931e7-b2a0-4b05-9df6-6e3830695f7d" style="Celula" x="240" y="146" width="59" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Parcela]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c163d242-c866-4a9f-bd53-d50ae9ac24ee" style="Celula" x="0" y="278" width="553" height="10"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<leftPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Sacado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8d29361-12cd-4e98-a29a-88ceb7b4e383" style="Celula" x="0" y="170" width="389" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Instruções]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0a791ab6-641e-4a4a-b3fd-c907a6320d3d" style="Txt_valor" x="389" y="236" width="164" height="6"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+			</textField>
+			<staticText>
+				<reportElement uuid="ab1862e0-83ae-44ee-b0d5-6596597613ac" style="Celula" mode="Transparent" x="389" y="242" width="164" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[(+) Outros Acréscimos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="148724e9-b16c-4b43-a641-01479da53b27" style="Celula" x="254" y="15" width="299" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Linha digitável]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1286ce86-72ab-4f38-a77d-35b0583f10fe" style="Celula" x="0" y="327" width="553" height="10"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="2">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="4"/>
+				</textElement>
+				<text><![CDATA[Sacador Avalista]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e5f57e3a-a4f5-48b9-9013-d7098eace882" x="111" y="2" width="442" height="13"/>
+				<box leftPadding="130"/>
+				<textElement>
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recibo do Sacado]]></text>
+			</staticText>
+			<textField pattern="000000000000000" isBlankWhenNull="true">
+				<reportElement uuid="cbe5aaf6-fcd5-44a7-8baf-c4a8b3a200bd" style="Txt_valor" x="389" y="156" width="164" height="14"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Double.parseDouble($F{idParcela}.toString() + $F{idContrato}.toString())]]></textFieldExpression>
+			</textField>
+			<textField pattern="000000000000000" isBlankWhenNull="true">
+				<reportElement uuid="54fad879-7ce3-48b6-8951-754074bc1e43" style="Txt_valor" x="177" y="51" width="177" height="16"/>
+				<box topPadding="2" leftPadding="2" bottomPadding="2" rightPadding="10">
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[Double.parseDouble($F{idParcela}.toString() + $F{idContrato}.toString())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="74401cdb-1ce4-4aad-85d2-c9fd2221d61e" style="Txt_Normal" x="143" y="313" width="34" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{uf}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="8761f1af-ff2a-4848-b582-cd82ba8e8190" style="Txt_Normal" x="177" y="313" width="157" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cep}]]></textFieldExpression>
+			</textField>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement uuid="c28e322f-52b3-4153-a23d-59f78c003081" x="0" y="73" width="56" height="24" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2"/>
+				<imageExpression><![CDATA[$P{BASE}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame" isUsingCache="true">
+				<reportElement uuid="1eb2d74a-cd81-4672-9516-7b4e0ca1b709" x="0" y="1" width="29" height="13" isPrintWhenDetailOverflows="true"/>
+				<box leftPadding="2"/>
+				<imageExpression><![CDATA[$P{BASE}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="453f8d66-2bac-436e-890e-4a6a9586d2ff" style="Txt_Normal" x="0" y="188" width="389" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["DESCONTO DE R$ " + ($F{desconto} != null ? String.format("%.2f", $F{desconto}) : "")  + " ATÉ O VENCIMENTO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="06c34b72-3ad4-43aa-8e92-36489c0289c1" style="Txt_Normal" x="0" y="202" width="389" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["VENCIDO, COBRAR MULTA DE 2% + JUROS DE 1% MÊS"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="9277c764-6400-465f-8840-3d3f778cd3c4" style="Txt_Normal" x="0" y="217" width="389" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["NÃO RECEBER COM 60 DIAS DE VENCIDO"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="f5c35d7d-5822-4c8f-bdb8-d5fe67d4730b" style="Txt_Normal" x="0" y="232" width="389" height="16"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROTESTAR EM 5 DIAS UTEIS"]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement uuid="4b494dc4-591b-4904-9a88-162a91db21bb" style="Txt_Normal" x="0" y="108" width="389" height="14"/>
+				<box topPadding="2" leftPadding="10" bottomPadding="2" rightPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PAGAVEL SOMENTE EM NOSSO ESCRITORIO"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

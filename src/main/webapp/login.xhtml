@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:mp="http://primefaces.org/ui/material">
+
+<h:head>
+	<f:facet name="first">
+		<meta http-equiv="Content-Type"
+			content="text/html; charset=iso-8859-1" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<title><h:outputText value="..:Financeiro:.." /></title>
+
+		<h:outputStylesheet library="css" name="page-center.css" />
+
+	</f:facet>
+
+</h:head>
+
+<h:body styleClass="grey lighten-4 loaded">
+
+	<div id="login-page" class="row">
+
+		<div class="col s12 z-depth-4 card-panel">
+
+			<h:form id="form" prependId="false">
+			
+				<p:defaultCommand target="btnEntrar" />
+				<p:focus for="txtEmail" />
+
+				<div class="row margin">
+					<div class="input-field col s12 center">
+						<mp:image library="imagens" name="logo.png" />
+						<p class="center login-form-text margin">Financeiro Web</p>
+					</div>
+				</div>
+
+					<div class="row margin">
+						<div class="input-field col s12">
+							<div class="input-field">
+								<mp:input id="txtEmail" label="E-mail" icon="mdi-action-account-box" value="#{loginBean.usuario.email}" />
+							</div>
+						</div>
+					</div>
+
+				<div class="row margin">
+					<div class="input-field col s12">
+						<div class="input-field">
+							<i class="mdi-action-lock prefix"></i>
+							<p:password id="txtSenha" value="#{loginBean.usuario.senha}" styleClass="validate" />
+							<label for="txtSenha" class="">Senha</label>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="input-field col s12">
+						<p:commandLink id="btnEntrar"
+							styleClass="btn waves-effect waves-light col s12 red darken-2"
+							action="#{loginBean.entrar}" ajax="false">
+							<span>Login </span>
+						</p:commandLink>
+					</div>
+				</div>
+				<div class="row">
+				</div>
+
+			</h:form>
+
+		</div>
+
+	</div>
+
+</h:body>
+
+</html>

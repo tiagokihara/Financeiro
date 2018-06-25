@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<f:metadata>
+			<f:viewParam name="idDependente" value="#{clienteBean.dependente.id}" />
+			<f:viewParam name="idCliente" value="#{clienteBean.cliente.id}" />
+			<f:event type="preRenderView" listener="#{clienteBean.carregarDependenteEdicao}" />
+		</f:metadata>
+
+		<p:blockUI block="pnDados" blocked="#{clienteBean.dependente.dataFim != null}" widgetVar="block" />
+
+		<h:form id="formDependente" styleClass="form" prependId="false">
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Cadastrar dependente</span> <br /> <span class="card-title" style="color: black"><h:outputText
+							value="#{clienteBean.cliente.nome}" /></span>
+					<p:outputPanel id="pnDados">
+						<div class="row">
+							<div class="input-field col s12">
+								<label id="lblNome" for="txtNome">Nome</label>
+								<p:inputText id="txtNome" value="#{clienteBean.dependente.nome}" styleClass="validate" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m6" style="margin-top: 15px">
+								<label id="lblNascimento" for="txtNascimento">Nascimento</label>
+								<p:inputMask id="txtNascimento" styleClass="validate" mask="99/99/9999" value="#{clienteBean.dependente.nascimento}"
+									onblur="limparMascara(this)">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</div>
+							<div class="input-field col s12 m6">
+								<h:selectOneMenu id="cmbParentesco" styleClass="validate" value="#{clienteBean.dependente.parentesco.id}" onchange="validar(this)">
+									<f:selectItem noSelectionOption="true" itemLabel="Selecione..." itemValue="" />
+									<f:selectItems value="#{clienteBean.parentescos}" var="parentesco" itemLabel="#{parentesco.descricao}" itemValue="#{parentesco.id}" />
+								</h:selectOneMenu>
+								<label for="cmbParenteso">Parentesco</label>
+							</div>
+						</div>
+					</p:outputPanel>
+					<div class="row right">
+						<div class="col s12">
+							<p:link outcome="/paginas/cliente/listarDependentes" id="btnCancelar">
+								<span><mp:icon name="mdi-navigation-arrow-back" /> Voltar</span>
+								<f:param name="idCliente" value="#{clienteBean.cliente.id}" />
+							</p:link>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnExcluir" styleClass="btn action waves-effect waves-light red darken-2"
+								actionListener="#{clienteBean.excluirDependente}" ajax="true" update="formDependente"
+								rendered="#{(clienteBean.dependente.dataFim == null and clienteBean.dependente.id != null)}">
+								<span>Excluir <i class="mdi-action-delete" style="vertical-align: top" />
+								</span>
+							</p:commandLink>
+							<p:spacer width="10px" />
+							<p:commandLink id="btnSalvar" actionListener="#{clienteBean.salvarDependente}"
+								styleClass="btn action waves-effect waves-light green darken-2" ajax="true" update="formDependente"
+								rendered="#{clienteBean.dependente.dataFim == null}">
+								<span>Salvar <i class="mdi-content-send" style="vertical-align: top" /></span>
+							</p:commandLink>
+						</div>
+					</div>
+					<div class="row"></div>
+				</div>
+			</div>
+
+			<script type="text/javascript">
+				$(document).ready(function() {
+
+					$('select').material_select();
+
+					$(".form input").not('.select-dropdown').each(function() {
+
+						if ($(this).val() != '') {
+
+							if (!$(this).hasClass('valid')) {
+
+								$(this).addClass('valid');
+							}
+						}
+					});
+
+					if ($('.select-dropdown').val() != 'Selecione...') {
+
+						if (!$('.select-dropdown').hasClass('valid')) {
+
+							$('.select-dropdown').addClass('valid');
+						}
+					}
+				});
+
+				function limparMascara(obj) {
+
+					if ($(obj).val() == '__/__/____') {
+
+						$(obj).val('');
+
+						$(obj).removeClass('valid');
+						$('#lblNascimento').removeClass('active');
+					}
+				}
+
+				function validar(obj) {
+
+					if ($(obj).val() != '') {
+
+						$('.select-dropdown').addClass('valid');
+					} else {
+
+						$('.select-dropdown').removeClass('valid');
+					}
+
+				}
+			</script>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

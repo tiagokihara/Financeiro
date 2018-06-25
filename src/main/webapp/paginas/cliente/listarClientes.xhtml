@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:event type="preRenderView" listener="#{clienteBean.carregarClientes}" />
+		</f:metadata>
+
+		<h:form id="formCliente" prependId="false">
+			<div class="card" style="display: none">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Filtro</span>
+					<div class="row">
+						<div class="col s8" style="margin-top: 14px">
+							<label for="txtNome">Nome</label>
+							<p:inputText id="txtNome" value="#{clienteBean.clienteFiltro.nome}" />
+						</div>
+						<div class="col s4">
+							<label for="cmbTipo">Tipo</label>
+							<mp:selectOne id="cmbTipo" value="#{clienteBean.clienteFiltro.tipo}">
+								<f:selectItem noSelectionOption="true" itemLabel="Selecione..." itemValue="" />
+								<f:selectItem itemLabel="Pessoa Física" itemValue="F" />
+								<f:selectItem itemLabel="Pessoa Jurídica" itemValue="J" />
+							</mp:selectOne>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12 right" style="text-align: right">
+							<p:commandLink id="btnPesquisar" actionListener="#{clienteBean.pesquisar}"
+								styleClass="btn action waves-effect waves-light teal lighten-1" update="dtbClientes">
+								<span>Pesquisar <i class="mdi-content-send" style="vertical-align: top" /></span>
+							</p:commandLink>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card-content">
+
+					<span class="card-title" style="color: black">Clientes</span>
+
+					<div class="row">
+						<div class="col s12 m6 l3">
+							<mp:selectOne id="cmbAtivos" value="#{clienteBean.clientesAtivos}">
+								<f:selectItem itemLabel="Selecione..." itemValue="" />
+								<f:selectItem itemLabel="Ativos" itemValue="true" />
+								<f:selectItem itemLabel="Inativos" itemValue="false" />
+								<p:ajax update="pnDataTable" listener="#{clienteBean.carregarClientes}" />
+							</mp:selectOne>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col s12">
+
+							<p:outputPanel id="pnDataTable">
+
+								<p:dataTable id="dtbClientes" value="#{clienteBean.clientes}" var="cliente" rows="10" paginator="true" paginatorPosition="bottom"
+									emptyMessage="Nenhum registro foi encontrado.">
+
+									<p:column headerText="Nome" filterBy="#{cliente.nome}" styleClass="filtro" filterMatchMode="contains">
+										<h:outputText value="#{cliente.nome}" />
+									</p:column>
+									<p:column headerText="Tipo" filterBy="#{cliente.descricaoTipo}" filterMatchMode="contains" styleClass="filtro">
+										<h:outputText value="Pessoa Física" rendered="#{cliente.tipo eq 'F'}" />
+										<h:outputText value="Pessoa Jurídica" rendered="#{cliente.tipo eq 'J'}" />
+									</p:column>
+									<p:column headerText="Exclusão" styleClass="center" rendered="#{!clienteBean.clientesAtivos}">
+										<center>
+											<h:outputText value="#{cliente.dataFim}">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+											</h:outputText>
+										</center>
+									</p:column>
+									<p:column headerText="Dependentes" styleClass="center">
+										<center>
+											<h:link outcome="/paginas/cliente/listarDependentes">
+												<i class="mdi-social-group" />
+												<f:param name="idCliente" value="#{cliente.id}" />
+											</h:link>
+										</center>
+									</p:column>
+									<p:column headerText="Contratos" styleClass="center">
+										<center>
+											<h:link outcome="/paginas/contrato/listarContratos">
+												<i class="mdi-av-my-library-books" />
+												<f:param name="idCliente" value="#{cliente.id}" />
+											</h:link>
+										</center>
+									</p:column>
+									<p:column headerText="Editar" styleClass="center">
+										<center>
+											<h:link outcome="/paginas/cliente/formCadastrarCliente">
+												<i class="mdi-image-edit" />
+												<f:param name="idCliente" value="#{cliente.id}" />
+											</h:link>
+										</center>
+									</p:column>
+
+								</p:dataTable>
+
+								<script type="text/javascript">
+									$(document).ready(function() {
+
+										$('#dtbClientes').removeClass('ui-datatable')
+										$('table').addClass('striped responsive-table');
+									});
+								</script>
+
+							</p:outputPanel>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+				<h:link outcome="/paginas/cliente/formCadastrarCliente"
+					class="btn-floating btn-large red darken-3 waves-effect waves-circle waves-light btn action">
+					<mp:icon name="mdi-content-add" />
+				</h:link>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

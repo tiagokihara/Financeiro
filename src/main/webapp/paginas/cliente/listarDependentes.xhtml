@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<f:metadata>
+			<f:viewParam name="idCliente" value="#{clienteBean.cliente.id}" />
+			<f:event type="preRenderView" listener="#{clienteBean.carregarDependentes}" />
+		</f:metadata>
+
+		<h:form id="formCliente" prependId="false">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black"><h:outputText value="#{clienteBean.cliente.nome}" /></span>
+					<div class="row">
+						<div class="col s12 m6 l3">
+							<mp:selectOne id="cmbAtivos" value="#{clienteBean.dependentesAtivos}">
+								<f:selectItem itemLabel="Selecione..." itemValue="" />
+								<f:selectItem itemLabel="Ativos" itemValue="true" />
+								<f:selectItem itemLabel="Inativos" itemValue="false" />
+								<p:ajax update="pnDataTable" listener="#{clienteBean.carregarDependentes}" />
+							</mp:selectOne>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col s12">
+							<p:outputPanel id="pnDataTable">
+							
+								<p:dataTable id="dtbDependentes" value="#{clienteBean.dependentes}" var="dependente" rows="10" paginator="true"
+									paginatorPosition="bottom" emptyMessage="Nenhum registro foi encontrado.">
+
+									<p:column headerText="Nome">
+										<h:outputText value="#{dependente.nome}" />
+									</p:column>
+									<p:column headerText="Nascimento">
+										<h:outputText value="#{dependente.nascimento}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Parentesco">
+										<h:outputText value="#{dependente.parentesco.descricao}" />
+									</p:column>
+									<p:column headerText="Exclusão" styleClass="center" rendered="#{!clienteBean.dependentesAtivos}">
+										<center>
+											<h:outputText value="#{dependente.dataFim}">
+												<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+											</h:outputText>
+										</center>
+									</p:column>
+									<p:column headerText="Editar"  styleClass="center">
+										<center>
+											<h:link outcome="/paginas/cliente/formCadastrarDependente">
+												<f:param name="idDependente" value="#{dependente.id}" />
+												<f:param name="idCliente" value="#{clienteBean.cliente.id}" />
+												<i class="mdi-image-edit" />
+											</h:link>
+										</center>
+									</p:column>
+								</p:dataTable>
+						
+								<script type="text/javascript">
+									$(document).ready(function() {
+
+										$('#dtbDependentes').removeClass('ui-datatable')
+										$('table').addClass('striped responsive-table');
+									});
+								</script>
+
+							</p:outputPanel>
+						</div>
+					</div>
+					<div class="row right">
+						<div class="col s12">
+							<p:link outcome="/paginas/cliente/listarClientes" id="btnCancelar">
+								<span><i class="mdi-navigation-arrow-back" /> Voltar</span>
+							</p:link>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+				<h:link outcome="/paginas/cliente/formCadastrarDependente"
+					class="btn-floating btn-large red darken-3 waves-effect waves-circle waves-light btn action">
+					<mp:icon name="mdi-content-add" />
+					<f:param name="idCliente" value="#{clienteBean.cliente.id}" />
+				</h:link>
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

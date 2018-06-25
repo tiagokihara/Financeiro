@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material" template="../paginas/template.xhtml"
+>
+
+	<ui:define name="conteudo">
+		<div class="card">
+			<div class="card-content">
+				<span class="card-title" style="color: black"><h:outputText value="#{usuarioLogadoBean.nome}" />, seja bem vindo!</span>
+				<mp:toast />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+
+		<h:form id="formRemessa" prependId="false">
+
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Remessas</span>
+					<div class="row">
+						<div class="col s12">
+							<p:dataTable id="dtbRemessas" value="#{remessaBean.remessas}" var="remessa" rows="10" paginator="true" paginatorPosition="bottom"
+								emptyMessage="Nenhum registro foi encontrado.">
+
+								<p:column headerText="Número" styleClass="center">
+									<center>
+										<h:outputText value="#{remessa.id}" />
+									</center>
+								</p:column>
+								<p:column headerText="Nome" >
+									<h:outputText value="#{remessa.nome}" />
+								</p:column>
+								<p:column headerText="Conta">
+									<h:outputText value="#{remessa.conta.nome}" />
+								</p:column>
+								<p:column headerText="Data" styleClass="center">
+									<h:outputText value="#{remessa.data}">
+										<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Remessa" styleClass="center">
+									<center>
+										<h:commandLink action="#{remessaBean.baixarRemessa}" ajax="false" onclick="formRemessa.target='_blank'">
+											<i class="mdi-file-file-download" />
+											<f:setPropertyActionListener value="#{remessa}" target="#{remessaBean.remessa}" />
+										</h:commandLink>
+									</center>
+								</p:column>
+							</p:dataTable>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+				<h:link outcome="/paginas/boleto/formCadastrarRemessa" onclick="formContrato.target='_self'"
+					class="btn-floating btn-large red darken-3 waves-effect waves-circle waves-light btn action">
+					<mp:icon name="mdi-content-add" />
+				</h:link>
+			</div>
+			
+			<script type="text/javascript">
+				$(document).ready(function() {
+
+					$('#dtbRemessas').removeClass('ui-datatable')
+					$('table').addClass('striped responsive-table');
+				});
+			</script>
+			
+		</h:form>
+	</ui:define>
+</ui:composition>

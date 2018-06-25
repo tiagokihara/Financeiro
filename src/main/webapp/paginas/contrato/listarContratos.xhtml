@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:mp="http://primefaces.org/ui/material"
+	template="../../paginas/template.xhtml">
+
+	<ui:define name="conteudo">
+		<f:metadata>
+			<f:viewParam name="idCliente" value="#{contratoBean.cliente.id}" />
+			<f:event type="preRenderView" listener="#{contratoBean.carregarClienteContrato}" />
+		</f:metadata>
+
+		<h:form id="formContrato" prependId="false" target="_self">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title" style="color: black">Contratos</span>
+
+					<div class="row"></div>
+					<div class="row">
+						<div class="col s12 m5">
+							Cliente:
+							<h:outputText value="#{contratoBean.cliente.nome}" />
+						</div>
+						<div class="col s12 m4">
+							Tel:
+							<h:outputText value="#{contratoBean.cliente.telefone}" rendered="#{contratoBean.cliente.telefone != null}" />
+							<h:outputText value=" - " rendered="#{contratoBean.cliente.telefone != null}" />
+							<h:outputText value="#{contratoBean.cliente.celular}" rendered="#{contratoBean.cliente.celular != null}" />
+						</div>
+						<div class="col s12 m3">
+							<div class="right">
+								<p:commandLink id="btnPesquisar" styleClass="btn action waves-effect waves-light red darken-2"
+									oncomplete="$('#modal1').openModal();" actionListener="#{contratoBean.carregarClientes}" update="pnClientes">
+									<span>Cliente <i class="mdi-action-find-replace" style="vertical-align: top" />
+									</span>
+								</p:commandLink>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col s12"></div>
+					</div>
+
+					<div class="row">
+						<div class="col s12">
+							<p:dataTable id="dtbContratos" value="#{contratoBean.contratosModel}" selection="#{contratoBean.contratosSelecionados}"
+								var="contrato" rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Nenhum registro foi encontrado."
+								rowKey="#{contrato.id}" lazy="true">
+
+								<p:column selectionMode="multiple" style="width:30px;text-align:center" styleClass="mat-check" />
+								<p:column headerText="Cliente">
+									<h:outputText value="#{contrato.cliente.nome}" />
+								</p:column>
+								<p:column headerText="Data Assinatura" styleClass="center">
+									<center>
+										<h:outputText value="#{contrato.dataAssinatura}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</center>
+								</p:column>
+								<p:column headerText="Primeira Parcela" styleClass="center">
+									<center>
+										<h:outputText value="#{contrato.primeiraParcela}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</center>
+								</p:column>
+								<p:column headerText="Última Parcela" styleClass="center">
+									<center>
+										<h:outputText value="#{contrato.ultimaParcela}">
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+										</h:outputText>
+									</center>
+								</p:column>
+								<p:column headerText="Carteirinha" styleClass="center">
+									<center>
+										<h:commandLink action="#{contratoBean.imprimirCarteirinha}" ajax="false" onclick="formContrato.target='_blank'">
+											<i class="mdi-action-print" />
+											<f:setPropertyActionListener value="#{contrato}" target="#{contratoBean.contrato}" />
+										</h:commandLink>
+									</center>
+								</p:column>
+								<p:column headerText="Boleto/Carnê" styleClass="center">
+									<center>
+										<h:commandLink action="#{contratoBean.imprimirBoletosCarnes}" ajax="false" onclick="formContrato.target='_blank'">
+											<i class="mdi-action-print" />
+											<f:setPropertyActionListener value="#{contrato}" target="#{contratoBean.contrato}" />
+										</h:commandLink>
+									</center>
+								</p:column>
+								<p:column headerText="Editar" styleClass="center">
+									<center>
+										<h:link outcome="/paginas/contrato/formCadastrarContrato" onclick="formContrato.target='_self'">
+											<i class="mdi-image-edit" />
+											<f:param name="idContrato" value="#{contrato.id}" />
+										</h:link>
+									</center>
+								</p:column>
+
+							</p:dataTable>
+						</div>
+					</div>
+					<div class="row right">
+						<div class="col s12">
+							<p:commandLink id="btnSalvar" action="#{contratoBean.imprimirCarteirinhasSelecionadas}"
+								styleClass="btn action waves-effect waves-light blue" ajax="false" onclick="formContrato.target='_blank'">
+								<span>Carteirinhas selecionadas <i class="mdi-action-print" style="vertical-align: top" /></span>
+							</p:commandLink>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal Structure -->
+			<div id="modal1" class="modal modal-fixed-footer">
+				<div class="modal-content">
+					<p:outputPanel id="pnClientes">
+						<div class="row">
+							<div class="col s12">
+								<p:dataTable id="dtbClientes" value="#{contratoBean.clientes}" var="cliente" rows="10" paginator="true" paginatorPosition="bottom"
+									emptyMessage="Nenhum registro foi encontrado.">
+
+									<p:column headerText="Nome" filterBy="#{cliente.nome}" styleClass="filtro" filterMatchMode="contains">
+										<h:outputText value="#{cliente.nome}" />
+									</p:column>
+									<p:column headerText="Tipo" filterBy="#{cliente.descricaoTipo}" filterMatchMode="contains" styleClass="filtro">
+										<h:outputText value="Pessoa Física" rendered="#{cliente.tipo eq 'F'}" />
+										<h:outputText value="Pessoa Jurídica" rendered="#{cliente.tipo eq 'J'}" />
+									</p:column>
+									<p:column headerText="Selecionar" >
+										<center>
+											<h:commandLink update="formContrato" onclick="formContrato.target='_self'">
+												<f:setPropertyActionListener value="#{cliente}" target="#{contratoBean.cliente}" />
+												<i class="mdi-action-cached" />
+											</h:commandLink>
+										</center>
+									</p:column>
+
+								</p:dataTable>
+							</div>
+						</div>
+
+						<script type="text/javascript">
+							$(document).ready(function() {
+
+								$('#dtbClientes').removeClass('ui-datatable')
+								$('table').addClass('striped responsive-table');
+							});
+						</script>
+					</p:outputPanel>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" class="modal-action modal-close waves-effect waves-light btn-flat "><i class="mdi-navigation-arrow-back"
+						style="vertical-align: bottom" />Voltar</a>
+				</div>
+			</div>
+
+			<p:outputPanel rendered="#{usuarioLogadoBean.nivel == 1}">
+				<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+					<h:link outcome="/paginas/contrato/formCadastrarContrato"
+						class="btn-floating btn-large red darken-3 waves-effect waves-circle waves-light btn action">
+						<f:param name="idCliente" value="#{contratoBean.idCliente}" />
+						<mp:icon name="mdi-content-add" />
+					</h:link>
+				</div>
+			</p:outputPanel>
+
+			<script type="text/javascript">
+				$(document).ready(function() {
+
+					$('#dtbContratos').removeClass('ui-datatable')
+					$('table').addClass('striped responsive-table');
+				});
+			</script>
+
+		</h:form>
+	</ui:define>
+</ui:composition>
