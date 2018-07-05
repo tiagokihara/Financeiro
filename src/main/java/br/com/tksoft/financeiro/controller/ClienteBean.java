@@ -111,6 +111,11 @@ public class ClienteBean implements Serializable {
 
 		return clienteDAO.getEstadosCivis();
 	}
+	
+	public List<Cliente> getEmpresas() {
+		
+		return clienteDAO.getEmpresas();
+	}
 
 	public List<Parentesco> getParentescos() {
 

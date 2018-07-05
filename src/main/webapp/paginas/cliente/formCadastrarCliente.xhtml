@@ -101,6 +101,18 @@
 								</div>
 							</div>
 						</p:outputPanel>
+						<p:outputPanel rendered="#{clienteBean.cliente.tipo eq 'F'}">
+							<div class="row">
+								<div class="input-field col s12">
+									<h:selectOneMenu id="cmbEmpresaResponsavel" value="#{clienteBean.cliente.empresaResponsavel.id}" onchange="validar(this)">
+										<f:selectItem noSelectionOption="true" itemLabel="Selecione..." itemValue="" />
+										<f:selectItems value="#{clienteBean.empresas}" var="empresa" itemLabel="#{empresa.nome}"
+											itemValue="#{empresa.id}" />
+									</h:selectOneMenu>
+									<label for="cmbEmpresaResponsavel">Empresa Responsavel</label>
+								</div>
+							</div>
+						</p:outputPanel>
 						<div class="row">
 							<div class="input-field col s12 m6">
 								<label id="txtTelefoneLbl" for="txtTelefone">Telefone</label>

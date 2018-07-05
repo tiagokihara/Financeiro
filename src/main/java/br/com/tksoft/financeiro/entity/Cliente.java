@@ -97,6 +97,10 @@ public class Cliente implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_estado_civil", referencedColumnName = "id")
 	private EstadoCivil estadoCivil;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_cliente_responsavel", referencedColumnName = "id")
+	private Cliente empresaResponsavel;
 
 	@OneToMany(mappedBy = "cliente")
 	private List<Dependente> dependentes;
@@ -363,5 +367,13 @@ public class Cliente implements Serializable {
 
 	public void setCelular3(String celular3) {
 		this.celular3 = celular3;
+	}
+
+	public Cliente getEmpresaResponsavel() {
+		return empresaResponsavel;
+	}
+
+	public void setEmpresaResponsavel(Cliente empresaResponsavel) {
+		this.empresaResponsavel = empresaResponsavel;
 	}
 }

@@ -27,6 +27,9 @@
 	<field name="planoFuneral" class="java.lang.Boolean">
 		<fieldDescription><![CDATA[planoFuneral]]></fieldDescription>
 	</field>
+	<field name="cliente.empresaResponsavel.nome" class="java.lang.String">
+		<fieldDescription><![CDATA[cliente.empresaResponsavel.nome]]></fieldDescription>
+	</field>
 	<detail>
 		<band height="176" splitType="Stretch">
 			<rectangle>
@@ -59,7 +62,7 @@
 				<textFieldExpression><![CDATA[$F{nomeCliente}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement uuid="2e54dd56-10c8-4937-8fae-84b066c585c8" x="0" y="91" width="241" height="20"/>
+				<reportElement uuid="2e54dd56-10c8-4937-8fae-84b066c585c8" x="0" y="75" width="241" height="20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[String.format("%09d", $F{idCliente})]]></textFieldExpression>
 			</textField>
@@ -161,6 +164,14 @@
 "ATEND. FUNERAL: ANGELUS (17) 3632-2002"
 :
 "SEM ATENDIMENTO FUNERAL")]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e918dd13-7b20-45fd-94b5-5448f065c5f4" x="0" y="95" width="241" height="20"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cliente.empresaResponsavel.nome}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
