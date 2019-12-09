@@ -3,7 +3,6 @@ package br.com.tksoft.financeiro.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -85,11 +84,14 @@ public class Contrato implements Serializable {
 
 	private BigDecimal multa;
 
+	@Column(name = "validade_contrato")
+	private Date validadeContrato;
+	
 	@Transient
-	private BigDecimal valorParcela;
+	private Integer quantidadeMesesContrato;
 
 	@Transient
-	private Date validadeContrato;
+	private BigDecimal valorParcela;
 
 	@ManyToOne
 	@JoinColumn(name = "id_conta", referencedColumnName = "id")
@@ -241,17 +243,8 @@ public class Contrato implements Serializable {
 
 	public Date getValidadeContrato() {
 
-		if (dataAssinatura != null) {
-
-		Calendar validade = Calendar.getInstance();
-		validade.setTime(dataAssinatura);
-		validade.add(Calendar.MONTH, 12);
-
-		return validade.getTime();
-		}
-
-		return null;
-		}
+		return validadeContrato;
+	}
 
 	public void setValidadeContrato(Date validadeContrato) {
 		this.validadeContrato = validadeContrato;
@@ -279,6 +272,14 @@ public class Contrato implements Serializable {
 
 	public void setConta(Conta conta) {
 		this.conta = conta;
+	}
+
+	public Integer getQuantidadeMesesContrato() {
+		return quantidadeMesesContrato;
+	}
+
+	public void setQuantidadeMesesContrato(Integer quantidadeMesesContrato) {
+		this.quantidadeMesesContrato = quantidadeMesesContrato;
 	}
 
 }

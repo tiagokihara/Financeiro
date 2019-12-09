@@ -203,11 +203,6 @@ public class ContratoBean implements Serializable {
 
 			Calendar primeiraParcela = Calendar.getInstance();
 			primeiraParcela.setTime(contrato.getPrimeiraParcela());
-			// primeiraParcela.setTime(contrato.getDataAssinatura());
-
-			// primeiraParcela.set(Calendar.DAY_OF_MONTH,
-			// contrato.getDiaVencimento());
-			// primeiraParcela.add(Calendar.MONTH, 1);
 
 			Calendar ultimaParcela = Calendar.getInstance();
 			ultimaParcela.setTime(primeiraParcela.getTime());
@@ -221,6 +216,26 @@ public class ContratoBean implements Serializable {
 
 			contrato.setPrimeiraParcela(null);
 			contrato.setUltimaParcela(null);
+		}
+		
+		if (contrato.getDataAssinatura() != null && contrato.getQuantidadeMesesContrato() != null) {
+			atualizarValidadeContrato();
+		}
+	}
+	
+	public void atualizarValidadeContrato() {
+
+		if (contrato.getDataAssinatura() != null && contrato.getQuantidadeMesesContrato() != null) {
+
+			Calendar validadeContrato = Calendar.getInstance();
+			validadeContrato.setTime(contrato.getDataAssinatura());
+			
+			validadeContrato.add(Calendar.MONTH, contrato.getQuantidadeMesesContrato());
+			
+			contrato.setValidadeContrato(validadeContrato.getTime());
+		} else {
+
+			contrato.setValidadeContrato(null);
 		}
 	}
 
@@ -236,12 +251,14 @@ public class ContratoBean implements Serializable {
 			for (Contrato contr : contratosSelecionados) {
 
 				contr.getCliente().setDependentes(clienteDAO.getDependentesByCliente(contr.getCliente().getId(), true));
-				// contr.setValidadeContrato(contratoDAO.getUltimaParcelaContrato(contr.getId()));
 
-				dataAssinatura.setTime(contr.getDataAssinatura());
-				dataAssinatura.add(Calendar.MONTH, 12);
-
-				contr.setValidadeContrato(dataAssinatura.getTime());
+				if (contr.getValidadeContrato() == null) {
+					
+					dataAssinatura.setTime(contr.getDataAssinatura());
+					dataAssinatura.add(Calendar.MONTH, 12);
+					
+					contr.setValidadeContrato(dataAssinatura.getTime());
+				}
 			}
 		}
 
@@ -260,13 +277,14 @@ public class ContratoBean implements Serializable {
 
 		contrato.getCliente().setDependentes(clienteDAO.getDependentesByCliente(contrato.getCliente().getId(), true));
 
-		// contrato.setValidadeContrato(contratoDAO.getUltimaParcelaContrato(contrato.getId()));
-
-		Calendar dataAssinatura = Calendar.getInstance();
-		dataAssinatura.setTime(contrato.getDataAssinatura());
-		dataAssinatura.add(Calendar.MONTH, 12);
-
-		contrato.setValidadeContrato(dataAssinatura.getTime());
+		if (contrato.getValidadeContrato() == null) {
+			
+			Calendar dataAssinatura = Calendar.getInstance();
+			dataAssinatura.setTime(contrato.getDataAssinatura());
+			dataAssinatura.add(Calendar.MONTH, 12);
+			
+			contrato.setValidadeContrato(dataAssinatura.getTime());
+		}
 
 		JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(Arrays.asList(contrato));
 

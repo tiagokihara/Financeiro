@@ -113,16 +113,26 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="input-field col s12 m4">
+							<div class="input-field col s12 m6">
 								<label id="txtAssinaturaLbl" for="txtAssinatura">Data Assinatura</label>
 								<p:inputMask id="txtAssinatura" onblur="limparMascara(this)" styleClass="validate" mask="99/99/9999"
 									value="#{contratoBean.contrato.dataAssinatura}">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 									<p:ajax event="blur" listener="#{contratoBean.atualizarPrimeiraUltimaParcela}"
-										update="txtPrimeiraParcela, txtUltimaParcela, txtValorParcela" process="@form" />
+										update="txtPrimeiraParcela, txtUltimaParcela, txtValorParcela, txtValidadeContrato" process="@form" />
 								</p:inputMask>
 							</div>
-							<div class="input-field col s12 m4">
+							<div class="input-field col s12 m6">
+								<label id="txtQtdMesesContrato_inputLbl" for="txtQtdMesesContrato">Qtd. Meses Contrato</label>
+								<pe:inputNumber id="txtQtdMesesContrato" onfocus="ativarLabel(this)" onblur="limparMascara(this)" decimalPlaces="0" maxValue="99"
+									value="#{contratoBean.contrato.quantidadeMesesContrato}">
+									<p:ajax event="blur" listener="#{contratoBean.atualizarValidadeContrato}"
+										update="txtValidadeContrato" process="@form" />
+								</pe:inputNumber>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s12 m6">
 								<label id="txtPrimeiraParcelaLbl" for="txtPrimeiraParcela">Primeira Parcela</label>
 								<p:inputMask id="txtPrimeiraParcela" onblur="limparMascara(this)" styleClass="validate" mask="99/99/9999"
 									value="#{contratoBean.contrato.primeiraParcela}">
@@ -131,7 +141,7 @@
 										process="@form" />
 								</p:inputMask>
 							</div>
-							<div class="input-field col s12 m4">
+							<div class="input-field col s12 m6">
 								<label id="txtQtdParcelas_inputLbl" for="txtQtdParcelas">Qtd. Parcelas</label>
 								<pe:inputNumber id="txtQtdParcelas" onfocus="ativarLabel(this)" onblur="limparMascara(this)" decimalPlaces="0" maxValue="99"
 									value="#{contratoBean.contrato.quantidadeParcelas}">
@@ -141,13 +151,19 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col s12 m6">
+							<div class="col s12 m4">
+								<label for="txtValidadeContrato">Validade Contrato</label>
+								<p:inputMask id="txtValidadeContrato" mask="99/99/9999" value="#{contratoBean.contrato.validadeContrato}" readonly="true">
+									<f:convertDateTime pattern="dd/MM/yyyy" />
+								</p:inputMask>
+							</div>
+							<div class="col s12 m4">
 								<label for="txtUltimaParcela">Última Parcela</label>
 								<p:inputMask id="txtUltimaParcela" mask="99/99/9999" value="#{contratoBean.contrato.ultimaParcela}" readonly="true">
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 								</p:inputMask>
 							</div>
-							<div class="col s12 m6">
+							<div class="col s12 m4">
 								<label for="txtValorParcela">Valor Parcela</label>
 								<pe:inputNumber id="txtValorParcela" decimalPlaces="2" thousandSeparator="." decimalSeparator=","
 									value="#{contratoBean.contrato.valorParcela}" readonly="true" />
